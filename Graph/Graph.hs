@@ -1,24 +1,9 @@
 {-# LANGUAGE GADTs, MultiParamTypeClasses, FunctionalDependencies, FlexibleInstances #-}
-module Network(Vertex, 
-               v, 
-               iden, 
-               Edge, 
+module Network(Edge, 
                to, 
                from, 
                val, 
-{-               Graph, 
-               vertices, 
-               edges,
-               addVertex,
-               removeVertex,
-               addVertices,
-               removeVertices,
-               addEdge,
-               removeEdge,
-               addEdge',
-               removeEdge',
-               addEdges,
-               removeEdges-}) where
+               ) where
 
 import Data.List
 import Data.Maybe
@@ -31,68 +16,59 @@ data Vertex a = V {v :: a,
 instance Eq (Vertex a) where 
   a == b = (iden a) == (iden b)
   
-instance Ord(Vertex a) where
+instance Ord (Vertex a) where
   a < b = (iden a) < (iden b)
 
-data Edge a b = (Eq b) => Edge {to   :: Vertex a, 
-                                from :: Vertex a,
+data Edge a b = (Eq b) => Edge {to   :: a, 
+                                from :: a,
                                 val  :: b
                                }
 
 instance (Eq b, Eq a) => Eq (Edge a b) where                
-  (==) a b = and [(to a) == (to b), (from a) == (from b)]
+  (==) a b = (to a) == (to b) && (from a) == (from b)
   
-{-
-data Graph v e = Directed {vertices :: Set.Set (Vertex v),
-                           edges    :: Set.Set (Edge v e)
-                          }
-
-addVertex :: Graph v e -> Vertex v -> Graph v e
-addVertex = undefined
-
-removeVertex :: Graph v e -> Vertex v -> Graph v e
-removeVertex = undefined
-
-addVertices :: Graph v e -> [Vertex v] -> Graph v e
-addVertices = undefined
-
-removeVertices :: Graph v e -> [Vertex v] -> Graph v e
-removeVertices = undefined
-
-addEdge :: Graph v e -> Vertex v -> Vertex v -> b -> Graph v e
-addEdge = undefined
-
-removeEdge :: Graph v e -> Vertex v -> Vertex v -> Graph v e
-removeEdge = undefined
-
-addEdge' :: Graph v e -> Edge v e -> Graph v e
-addEdge' = undefined
-
-removeEdge' :: Graph v e -> Edge v e -> Graph v e
-removeEdge' = undefined
-
-addEdges :: Graph v e -> [Edge v e] -> Graph v e
-addEdges = undefined
-
-removeEdges :: Graph v e -> [Edge v e] -> Graph v e
-removeEdges = undefined
-
-mapVert :: Graph v e -> (Vertex v -> Vertex c) -> Graph c b
-mapVert = 
-G
-mapEdge :: Graph v e -> (Edge v e -> Edge a c) -> Graph a c
-mapEdge = undefined
--}
+instance (Ord v, Eq e) => (Ord (Edge v e)) where
+  e1 < e2 = (to e1) < (to e2)
+  e1 >= e2 = (to e1) >= (to e2)
+  e1 > e2 = (to e1) > (to e2)
+  e1 <= e2 = (to e1) <= (to e2)
+  
+instance (Show v, Show e) => Show (Edge v e) where
+  show e = "//Edge to: " ++ (show $ to e) ++ ", Edge from: " ++ (show $ from e) ++ ", val: " ++ (show $ val e) ++ "//"
 
 class Graph g v e | g -> v e where
-  addVertex :: g -> v -> g
-  addEdge   :: g -> e -> g
+  addVertex      :: g ->  v -> g
+  addVertices    :: g -> [v] -> g
+  removeVertex   :: g ->  v  -> g
+  removeVertices :: g -> [v] -> g
+  addEdge        :: g ->  Edge v e  -> g
+  addEdges       :: g -> [Edge v e] -> g
+  removeEdge     :: g ->  Edge v e  -> g
+  removeEdges    :: g -> [Edge v e] -> g
+  getVertices    :: g -> Set.Set v
+  getEdges       :: g -> Set.Set (Edge v e)
+  outEdges       :: g -> v -> Set.Set (Edge v e)
+  inEdges        :: g -> v -> Set.Set (Edge v e)
   
-  
+
 data UndirectedGraph v e = UG {verts :: Set.Set v,
                                edges :: Set.Set (Edge v e)
                               }
                            
-instance (Ord v) => Graph (UndirectedGraph v e) v e where
-  addVertex g v = UG (Set.insert v (verts g)) (edges g)
-  addEdge = undefined
+instance (Ord e, Ord v) => Graph (UndirectedGraph v e) v e where
+  addVertex g v = UG (Set.insert v vertices) (edges g)
+    where vertices = verts g
+  addVertices = foldl' addVertex
+  removeVertex g v = UG newVerts newEdges
+    where newVerts = Set.delete v (verts g)
+          newEdges = Set.filter (\e -> not $ any (== v) [to e, from e]) (edges g)
+  removeVertices = foldl' removeVertex
+  addEdge g e = UG vertices newEdges
+    where vertices = Set.insert (from e) $ Set.insert (to e) (verts g)
+          newEdges = Set.insert reverseEdge $ Set.insert e (edges g)
+          reverseEdge = Edge (from e) (to e) (val e)
+  addEdges = foldl' addEdge
+  removeEdge g e = UG (verts g) (Set.delete e (edges g))
+  removeEdges = foldl' removeEdge
+  getEdges = edges
+  getVertices = verts
