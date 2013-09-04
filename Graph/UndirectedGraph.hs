@@ -37,3 +37,4 @@ instance (Ord e, Ord v) => Graph (UndirectedGraph v e) v e where
   getVertices = verts
   inEdges g v = Set.filter ((== v) . to) (edges g)
   outEdges g v = Set.filter ((== v) . from) (edges g)
+  

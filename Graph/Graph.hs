@@ -17,7 +17,11 @@ module Graph(Edge,
              getEdges,
              outEdges,
              inEdges,        
-            module Data.List,
+             fromEdges,
+             fromEdges',
+             toSimpleGML,
+             forest,
+             module Data.List,
             ) where
 
 import Data.List
@@ -55,31 +59,23 @@ class Graph g v e | g -> v e where
   getVertices                 :: g -> Set.Set v
   getEdges                    :: g -> Set.Set (Edge v e)
   inEdges, outEdges           :: g -> v -> Set.Set (Edge v e)
+  fromEdges                   :: Set.Set (Edge v e) -> g
+  fromEdges'                  :: Set.Set v -> Set.Set (Edge v e) -> g
+  forest                      :: Set.Set v -> g
 
+toSimpleGML :: (Show v, Show e, Graph g v e) => g ->  String
+toSimpleGML g = "<graphml>\n" ++
+          "  <graph>\n" ++
+               vertsInML (getVertices g) ++ "\n" ++
+               edgesInML (getEdges g) ++
+          "  </graph>\n</graphml>\n"
+             
+  where vertsInML :: (Show v) => Set.Set v -> String
+        vertsInML = concatMap (\v -> "    <node id=\"" ++ (show v) ++ "\"/>\n") . (Set.toList)
+        edgesInML :: (Show e, Show v) => Set.Set (Edge v e) -> String
+        edgesInML = concatMap (\e -> "    <edge source=\"" ++ (show (from e)) ++ "\" target=\"" ++ (show (to e)) ++ "\"/>\n") . (Set.toList)
 
-toGML :: (Graph g v e) => g ->  String
-toGML = undefined
+mapGraph :: (Ord v, Ord e, Ord d, Ord u, Graph g v e, Graph a u d) => 
+            (Edge v e -> Edge u d) -> g -> a
+mapGraph f = fromEdges . ((Set.map f) . getEdges)
 
-{-data UndirectedGraph v e = UG {verts :: Set.Set v,
-                               edges :: Set.Set (Edge v e)
-                              }
-                           
-instance (Ord e, Ord v) => Graph (UndirectedGraph v e) v e where
-  addVertex g v = UG (Set.insert v vertices) (edges g)
-    where vertices = verts g
-  addVertices = foldl' addVertex
-  removeVertex g v = UG newVerts newEdges
-    where newVerts = Set.delete v (verts g)
-          newEdges = Set.filter (\e -> not $ any (== v) [to e, from e]) (edges g)
-  removeVertices = foldl' removeVertex
-  addEdge g e = UG vertices newEdges
-    where vertices = Set.insert (from e) $ Set.insert (to e) (verts g)
-          newEdges = Set.insert reverseEdge $ Set.insert e (edges g)
-          reverseEdge = Edge (from e) (to e) (val e)
-  addEdges = foldl' addEdge
-  removeEdge g e = UG (verts g) (Set.delete e (edges g))
-  removeEdges = foldl' removeEdge
-  getEdges = edges
-  getVertices = verts
-  inEdges g v = Set.filter ((== v) . to) (edges g)
-  outEdges g v = Set.filter ((== v) . from) (edges g)-}
