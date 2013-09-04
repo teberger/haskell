@@ -47,7 +47,7 @@ instance (Ord v, Eq e) => (Ord (Edge v e)) where
   e1 <= e2 = (to e1) <= (to e2)
   
 instance (Show v, Show e) => Show (Edge v e) where
-  show e = " [" ++ (show $ val e) ++ "]={" ++ (show $ to e) ++ "}->{" ++ (show $ from e) ++ "}"
+  show e = " [" ++ (show $ val e) ++ "]={" ++ (show $ from e) ++ "}->{" ++ (show $ to e) ++ "}"
 
 
 -- Graph class starts here
@@ -61,7 +61,7 @@ class Graph g v e | g -> v e where
   inEdges, outEdges           :: g -> v -> Set.Set (Edge v e)
   fromEdges                   :: Set.Set (Edge v e) -> g
   fromEdges'                  :: Set.Set v -> Set.Set (Edge v e) -> g
-  forest                      :: Set.Set v -> g
+  forest                      :: [v] -> g
 
 toSimpleGML :: (Show v, Show e, Graph g v e) => g ->  String
 toSimpleGML g = "<graphml>\n" ++
