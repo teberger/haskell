@@ -18,7 +18,7 @@ module Graph(Edge,
              outEdges,
              inEdges,        
              fromEdges,
-             fromEdges',
+             newGraph,
              toSimpleGML,
              forest,
              module Data.List,
@@ -51,17 +51,31 @@ instance (Show v, Show e) => Show (Edge v e) where
 
 
 -- Graph class starts here
-class Graph g v e | g -> v e where
+class (Ord v, Ord e) => Graph g v e | g -> v e where
   addVertex, removeVertex     :: g ->  v -> g
+  addVertex g v               = newGraph (Set.insert v (getVertices g)) (getEdges g)
+  removeVertex g v            = newGraph (Set.delete v (getVertices g)) newEdges
+    where newEdges = Set.filter (\e -> not $ any (== v) [to e, from e]) (getEdges g)
   addVertices, removeVertices :: g -> [v] -> g
+  addVertices                 = foldl' addVertex
+  removeVertices              = foldl' removeVertex
   addEdge, removeEdge         :: g ->  Edge v e  -> g
+  addEdge g e                 = newGraph newVerts newEdges
+    where newVerts = Set.insert (from e) $ Set.insert (to e) (getVertices g)
+          newEdges = Set.insert e (getEdges g)
+  removeEdge g e              = newGraph (getVertices g) (Set.delete e (getEdges g))
   addEdges, removeEdges       :: g -> [Edge v e] -> g
+  addEdges                    = foldl' addEdge
+  removeEdges                 = foldl' removeEdge
   getVertices                 :: g -> Set.Set v
   getEdges                    :: g -> Set.Set (Edge v e)
   inEdges, outEdges           :: g -> v -> Set.Set (Edge v e)
+  inEdges g v                 = Set.filter ((== v) . to) (getEdges g)
+  outEdges g v                = Set.filter ((== v) . from) (getEdges g)
   fromEdges                   :: Set.Set (Edge v e) -> g
-  fromEdges'                  :: Set.Set v -> Set.Set (Edge v e) -> g
+  newGraph                  :: Set.Set v -> Set.Set (Edge v e) -> g
   forest                      :: [v] -> g
+  forest                      = addVertices (newGraph Set.empty Set.empty)
 
 toSimpleGML :: (Show v, Show e, Graph g v e) => g ->  String
 toSimpleGML g = "<graphml>\n" ++
