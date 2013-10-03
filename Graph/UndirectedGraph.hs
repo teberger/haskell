@@ -7,6 +7,7 @@ module UndirectedGraph(empty,
 
 import qualified Data.Set as Set
 import Graph
+import DirectedGraph
 
 data UndirectedGraph v e = UG {dg :: DirectedGraph v e}
                            
@@ -26,12 +27,3 @@ instance (Ord e, Ord v) => Graph (UndirectedGraph v e) v e where
   fromEdges ls = addEdges (UG empty) (Set.toList ls)
   newGraph nl el = addEdges (forest (Set.toList nl)) (Set.toList el)
   
-data DirectedGraph v e = DG {verts :: Set.Set v,
-                             edges :: Set.Set (Edge v e)
-                             }
-                         
-instance (Ord e, Ord v) => Graph (DirectedGraph v e) v e where
-  getEdges = edges
-  getVertices = verts
-  fromEdges ls = addEdges empty (Set.toList ls)
-  newGraph nl el = addEdges (addVertices empty (Set.toList nl)) (Set.toList el)
