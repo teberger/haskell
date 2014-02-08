@@ -1,0 +1,153 @@
+module Main where
+
+import Data.List
+import Data.Char
+import Data.Maybe
+import System.IO
+import System.Environment
+import System.Console.ANSI
+import qualified Data.HashTable.IO as HT
+
+data State = State { topLeft :: (Int, Int), 
+                     running :: Bool, 
+                     field :: HashTable (Int, Int) Char,
+                     rules :: HashTable String Char
+                   }
+
+type HashTable k v = HT.BasicHashTable k v
+type IterationFunction = ((Int, Int), Char) -> IO ((Int, Int), Char)
+
+dimensions = (150,150) :: (Int, Int)
+
+main :: IO ()
+main = do
+     grid <- HT.fromList initAssocs :: IO (HashTable (Int, Int) Char)
+     rule_file <- openFile "transTable.txt" ReadMode
+     ruleCont <- hGetContents rule_file
+     rules <- HT.fromList $ rulesAssocs ruleCont:: IO (HashTable (String) Char)
+     
+     let initState = State (0-55,0-25) False grid rules
+         iter_func = iter rules grid :: ((Int, Int), Char) -> IO ((Int, Int), Char)
+         
+--set up controls
+
+--     HT.mapM_ iter_func grid         
+--     HT.lookup rules "00000" >>= print
+--     HT.toLuist table >>= print . sort
+--     HT.computeOverhead table >>= print
+     hideCursor
+--     hSetBuffering stdout (BlockBuffering (Just (100*50)))
+     clearScreen
+     drawBorder
+     mainIter initState iter_func
+
+
+--iteration functions     
+mainIter :: State -> IterationFunction -> IO ()
+mainIter s f  = do
+         HT.mapM_ f (field s)
+         setCursorPosition 50 0
+         clearLine
+         (HT.computeOverhead (field s)) >>= print
+         mainIter s f
+
+
+-- Side effect identity map across the hashtable that inserts the char '0' in places directly
+-- adjacent to any aready known value. This way, our field continues to expand as needed
+insertUnknowns :: HashTable (Int, Int) Char -> (Int, Int) -> IO [(Int, Int)]
+insertUnknowns grid x = do
+             let neighbors = orderedNeighbors x
+                 unknowns = catMaybes $ map (\x -> do 
+                                                     u <- HT.lookup grid x
+                                                     case u of 
+                                                       Nothing -> Nothing
+                                                       Just _  -> Just x
+                                            ) neighbors
+             return unknowns
+
+
+     
+iter :: HashTable String Char -> HashTable (Int, Int) Char -> IterationFunction
+iter rules table (x,c) = do 
+  ls_m <- mapM (HT.lookup table) $ orderedNeighbors x :: IO [(Maybe Char)]
+  let ls = map (\x -> case x of
+                   Nothing -> '0'
+                   Just a  ->  a
+               ) ls_m :: String
+  HT.lookup rules ls >>= return . (,) x . fromJust
+
+
+-- Display Stuffs
+colorChar :: Char -> SGR
+colorChar '1' = SetColor Foreground Dull Blue
+colorChar '2' = SetColor Foreground Dull Red
+colorChar '3' = SetColor Foreground Dull Green
+colorChar '4' = SetColor Foreground Dull Yellow
+colorChar '5' = SetColor Foreground Dull Magenta
+colorChar '6' = SetColor Foreground Dull White
+colorChar '7' = SetColor Foreground Dull Cyan
+colorChar '|' = SetColor Foreground Dull Green
+colorChar '-' = SetColor Foreground Dull Green
+colorChar _ = SetColor Foreground Dull Black
+
+
+drawBorder :: IO ()
+drawBorder = do 
+           mapM_ (putCharAt '|') leftSide
+           mapM_ (putCharAt '|') rightSide
+           mapM_ (putCharAt '-') topSide
+           mapM_ (putCharAt '-') bottomSide
+
+leftSide :: [(Int, Int)]
+leftSide = [(y, 0) | y <- [0..49]]
+
+rightSide :: [(Int, Int)]
+rightSide = [(y, 110) | y <- [0..49]]
+
+topSide :: [(Int, Int)]
+topSide = [(0, x) | x <- [1..109]]
+
+bottomSide :: [(Int, Int)]
+bottomSide = [(49, x) | x <- [1..109]]
+
+
+putCharAt :: Char -> (Int, Int) -> IO ()
+putCharAt c (x,y) = setSGR [(colorChar c)] >> setCursorPosition x y >> hPutChar stdout c
+
+{-This is done by Langton's specification with the coordinates: [S,T,R,B,L]
+  where S = Selftu
+        T = Top,
+        RH = Right
+        B = Bottom
+        L = Left
+-}
+orderedNeighbors :: (Int, Int) -> [(Int, Int)]
+orderedNeighbors i@(x,y) = [i, (x,y-1), (x+1, y), (x, y+1), (x-1, y)]
+--}     
+
+{- rules association list. Expects the formate CCCCC=C
+   where C is a Char
+-}
+rulesAssocs :: String -> [(String, Char)]
+rulesAssocs s = [(x, head . tail $ y ) | (x,y) <- map (break ((==) '=')) (lines s)]
+--}
+
+--initial configuration
+initAssocs :: [((Int, Int), Char)]
+initAssocs = [((i,j), (charat i j)) | i <- [1..rowLength], j <- [1..colLength]]
+  where charat i j = (startConfig !! j) !! i
+        rowLength = (length . head $ startConfig) -1
+        colLength = (length $ startConfig) -1
+
+
+startConfig :: [String]
+startConfig = ["022222222000000",
+               "217014014200000",
+               "202222220200000", 
+               "272000021200000", 
+               "212000021200000", 
+               "202000021200000", 
+               "272000021200000",
+               "212222221222220",
+               "207107107111112", 
+               "022222222222220" ]

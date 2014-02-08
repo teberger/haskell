@@ -35,7 +35,7 @@ data Edge a b = (Eq b) => Edge {to   :: a,
                                }
                 
 makeEdge :: (Eq a, Eq b) => a -> a -> b -> Edge a b
-makeEdge t f v = Edge t f v
+makeEdge to from value = Edge to from value
   
 instance (Eq b, Eq a) => Eq (Edge a b) where                
   (==) a b = (to a) == (to b) && (from a) == (from b) && (val a) == (val b)
@@ -89,7 +89,7 @@ toSimpleGML g = "<graphml>\n" ++
         edgesInML :: (Show e, Show v) => Set.Set (Edge v e) -> String
         edgesInML = concatMap (\e -> "    <edge source=\"" ++ (show (from e)) ++ "\" target=\"" ++ (show (to e)) ++ "\"/>\n") . (Set.toList)
 
-mapGraph :: (Ord v, Ord e, Ord d, Ord u, Graph g v e, Graph a u d) => 
+mapG :: (Ord v, Ord e, Ord d, Ord u, Graph g v e, Graph a u d) => 
             (Edge v e -> Edge u d) -> g -> a
-mapGraph f = fromEdges . ((Set.map f) . getEdges)
+mapG f = fromEdges . ((Set.map f) . getEdges)
 
