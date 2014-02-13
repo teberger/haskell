@@ -1,11 +1,24 @@
+{-# LANGUAGE GADTs #-}
 module Main where
 
+import DecisionTree
+import Data.List
+import qualified Data.Vector as V
 import Control.Monad
 import System.Environment
 import System.IO
+                    
+type Promoter = Bool
 
-type DnaSequence = (String, Bool)
+type Feature = Int
 
+data Nucleotide = A | C | G | T
+
+toNuc :: Char -> Nucleotide
+toNuc 'a' = A
+toNuc 'c' = C
+toNuc 'g' = G
+toNuc 't' = T
 
 --Note: Hasekll is a whitespace significant language. All lines starting indented from 'main' are executed 
 --as part of the main function. Also, 'return' is not used to exit the function. The last statement
@@ -26,14 +39,12 @@ main = do
      -- tuple_func turns the " +" and " -" into boolean True or Falses
      -- Since we only have 2 classes, it will be more efficient to use
      -- T/F rather than Strings
-     let tuple_func = (\(x,y) -> case y of
-                                      " -" -> (x, False)
-                                      " +" -> (x, True)
-                         ) 
-         train_set = map tuple_func trainSetString :: [DnaSequence] -- list of (String, Bool) tuples
-         valid_set = map tuple_func validSetString :: [DnaSequence] -- list of (String, Bool) tuples
-     
-     
+     let tuple_func = \(x,y) -> case y of
+                                      " -" -> mkInstance (map toNuc x, False) :: Instance Feature Nucleotide Promoter
+                                      " +" -> mkInstance (map toNuc x, True)  :: Instance Feature Nucleotide Promoter
+         -- list of String Bool instances
+         train_set = map tuple_func trainSetString :: [Instance Feature Nucleotide Promoter]
+         -- list of String Bool instances
+         valid_set = map tuple_func validSetString :: [Instance Feature Nucleotide Promoter]
+         
      return ()
-
-
