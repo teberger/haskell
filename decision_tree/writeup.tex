@@ -1,0 +1,16 @@
+\documentclass[12pt]{article}
+\usepackage[width=6.5in]{geometry}
+\begin{document}
+\title{Decision Trees}
+\author{Taylor Berger}
+\date{}
+\maketitle
+
+\section{High Level Overview}
+\paragraph{}My code was written in the functional language, Haskell. It accepts two program arguments. The first being the location of the file containing the training data. The second is the location of the file used for validation of the decision tree. Lines 14-22 are top level definitions to help the readability of the function definitions. The decision tree a standard rose tree implementation with the nodes representing the index of the nucleotides in any given DNA string. There are type signatures on the end of most lines that will give the type of the data that was constructed (these are designated by the ':: TYPE'). 
+
+\paragraph{}
+
+\section{Accuracies and Performance}
+Using the formula for information gain, I was able to obtain an 85\% accuracy rate with the training data provided. The nodes were used to fit 100\% of the data, meaning if there was a split that could be made, it was done. Given an 85\% accuracy rating, no further work was done to obtain better accuracy.
+\end{document}

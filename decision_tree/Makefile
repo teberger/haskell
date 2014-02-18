@@ -1,7 +1,7 @@
 default: clean
 
 clean : 
-	rm *~ *.o *.hi
+	rm *.o *.hi *.aux *.log writeup.synctex.gz
 
 compile : 
 	ghc --make constructTree.hs -o decisionTree
