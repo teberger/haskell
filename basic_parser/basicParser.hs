@@ -6,12 +6,11 @@ import System.Environment
 import System.IO
 
 main :: IO ()
-main = do
+main = do 
   program:_ <- getArgs
   contents <- hGetContents =<< openFile program ReadMode
   
   return ()
-
 
 ws :: Parser ()
 ws = space >> return ()
@@ -29,55 +28,29 @@ remark = do
   (manyTill anyChar newline) >>= return
 
 type ID = String
-bid :: Parser String
+bid :: Parser ID
 bid = many1 letter
-
-basicString :: Parser String
-basicString = tokens' $ do
-  c <- (char '"' <|> char '\'')
-  manyTill anyChar (char c) >>= return
-  
-int :: Parser Int  
-int = tokens' (many1 digit >>= return . read)
-
-basicReal :: Parser Double
-basicReal = tokens' $ do
-  i <- many1 digit
-  char '.'
-  i2 <- many1 digit
-  return (read (i ++ "." ++ i2))
-
 
 type Lines a = [(Int, Statements a)]
 basiclines :: Parser (Lines a)
-basiclines = bl1 <|> bl2 <?> "Could not parse a Basic line: Integer Statement Newline Lines or Integer Statement Newline"
+--basiclines = bl1 <||> bl2 <?> "Could not parse a Basic line: Integer Statement Newline Lines or Integer Statement Newline"
+basiclines = basicList bl newline
   
-bl1 = do
-  i <- int :: Parser Int
-  s <- statements :: Parser (Statements a)
-  newline
-  ls <- basiclines
-  return ((i, s):ls)
-  
-bl2 = do
+bl :: Parser (Int, Statements a)
+bl = do
   i <- int
   s <- statements
-  return [(i,s)]
+  return (i,s)
   
-                  
 type Statements a = [Statement a]
-statements :: Parser (Statements a)
-statements = s1 <|> s2 <?> "could not parse a statement: Statement ':' Statements or Statement"
-             
-s1 = do
-  s <- statement :: Parser (Statement a)
-  tokens' (char ':')
-  ls <- statements
-  return (s:ls) 
-  
-s2 = do
+statements :: Parser [Statement a]
+--statements = s1 <||> s2 <?> "could not parse a statement: Statement ':' Statements or Statement"
+statements = basicList s (char ':') 
+
+s :: Parser (Statement a)
+s = do
   s <- statement
-  return [s]
+  return s
 
 data Statement a = forall a .  
                      SData [Constant a] 
@@ -94,8 +67,8 @@ data Statement a = forall a .
                    | Next [ID] 
                    | Open (Value a) Access (Constant Int) 
                    | Poke [Value a] 
-                   | Print [a] 
-                   | PrintAt (Constant Int) [a] 
+                   | Print [Expression a] 
+                   | PrintAt (Constant Int) [Expression a] 
                    | Read [ID] 
                    | RETURN 
                    | RESTORE 
@@ -103,7 +76,7 @@ data Statement a = forall a .
                    | STOP 
                    | Sys (Value a) 
                    | Wait (Value a) 
-                   | Remark
+                   | Remark String
                      
 instance (Show a) => Show (Statement a) where                     
   show (SData a)            = "DATA " ++ (show a)
@@ -117,7 +90,7 @@ instance (Show a) => Show (Statement a) where
   show (Input c ids)        = "INPUT #" ++ (show c) ++ " " ++ (show ids)
   show (Let id e1)          = "LET " ++ id ++ " = " ++ (show e1)
   show (Next ids)           = "NEXT " ++ (show ids)
-  show (Open vs a c)        = "OPEN " ++ (show vs) ++ " FOR " ++ (show a) ++ " AS #" ++ (show c)
+  show (Open v a c)         = "OPEN " ++ (show v) ++ " FOR " ++ (show a) ++ " AS #" ++ (show c)
   show (Poke vs)            = "POKE " ++ (show vs)
   show (Print as)           = "PRINT " ++ (show as)
   show (PrintAt c as)       = "PRINT #" ++ (show c) ++ " " ++ (show as)
@@ -128,23 +101,145 @@ instance (Show a) => Show (Statement a) where
   show STOP                 = "STOP"
   show (Sys v)              = "SYS " ++ (show v)
   show (Wait v)             = "WAIT " ++ (show v)
-  show Remark               = "REM"
+  show (Remark s)           = "REM" ++ s
   show END                  = "END"
-  
+
 string' = tokens' . string
 
+expression :: Parser (Expression a)
 expression = undefined
 
-statement :: Parser (Statement a)
-statement = tokens' $ ((try dim) <|> (try dataStatement) <|> (try end) <|> (try for) <|> (try forstep) <|> (try goto) <|> try gosub <?> "Failed attempting to parse a statement")
+value :: Parser (Value a)
+value = undefined
 
+basicList :: Parser a -> Parser sep -> Parser [a]
+basicList itemParser sep = (b1 itemParser sep) <||> try (b2 itemParser) <?> "Failed parsing a list"
+
+b1 :: Parser a -> Parser sep -> Parser [a]
+b1 a sep = do
+  a' <- a
+  tokens' sep
+  as <- basicList a sep
+  return (a':as)
+
+b2 :: Parser a -> Parser [a]
+b2 a = a >>= \x -> return [x]
+
+idlist :: Parser [ID]
+idlist = basicList bid (char ',')
+
+valueList :: Parser [Value a]
+valueList = basicList value (char ',')
+
+printList :: Parser [Expression a]
+printList = basicList expression (char ';')
+
+access :: Parser Access
+access = ((string' "INPUT") >> return AInput)
+         <||> (try (string' "OUTPUT") >> return AOutput)
+
+(<||>) f s = try f <|> s
+
+statement :: Parser (Statement a)
+statement = tokens' $ (dim <||>  dataStatement <||>  end <||>  for <||>  forstep <||>  goto <||>  gosub <||>  ifStatement <||>  inputls <||>  input <||>  letstatement <||>  next <||>  open <||>  poke <||>  printStatement <||>  printAt <||>  returnStatement <||>  restore <||>  run <||>  stop <||>  sys <||>  wait <||>  try remStatement <?> "Failed attempting to parse a statement")
+
+stop :: Parser (Statement a)
+stop = string' "STOP" >> return STOP
+
+sys :: Parser (Statement a)
+sys = string' "SYS" >> value >>= return . Sys
+
+wait :: Parser (Statement a)
+wait = string' "WAIT" >> value >>= return . Wait
+
+remStatement :: Parser (Statement a)
+remStatement = do
+  r <- remark
+  return (Remark r)
+
+returnStatement :: Parser (Statement a)
+returnStatement = string' "RETURN" >> return RETURN
+
+restore :: Parser (Statement a)
+restore = string' "RESTORE" >> return RESTORE
+
+run :: Parser (Statement a)
+run = string' "RUN" >> return RUN
+
+readStatement :: Parser (Statement a)
+readStatement = do
+  string' "READ"
+  ls <- idlist
+  return (Read ls)
+
+printAt :: Parser (Statement a)
+printAt = do
+  string' "PRINT #"
+  i <- int
+  ls <- printList
+  return (PrintAt (Constant i) ls)
+
+printStatement :: Parser (Statement a)
+printStatement = do
+  string' "PRINT" 
+  ls <- printList
+  return (Print ls)
+
+poke :: Parser (Statement a)
+poke = do
+  string' "POKE"
+  vs <- valueList
+  return (Poke vs)
+
+open :: Parser (Statement a)
+open = do
+  string' "OPEN"
+  vs <- value
+  a <- access
+  i <- int
+  return (Open vs a (Constant i))
+
+next :: Parser (Statement a)
+next = do
+  string' "NEXT"
+  ls <- idlist
+  return (Next ls)
+
+letstatement :: Parser (Statement a)
+letstatement = do
+  string' "LET"
+  i <- bid
+  tokens' (char '=')
+  e <- expression
+  return (Let i e)
+
+input :: Parser (Statement a)
+input = do
+  string' "INPUT #"
+  i <- int
+  ls <- idlist
+  return (Input (Constant i) ls)
+
+inputls :: Parser (Statement a)
+inputls = do
+  string' "INPUT"
+  ids <- idlist
+  return (InputList ids)
+
+ifStatement :: Parser (Statement a)
+ifStatement = do
+  string' "IF"
+  e <- expression
+  string' "THEN"
+  s <- statement
+  return (If e s)
 
 gosub :: Parser (Statement a)
 gosub = do
   string' "GOSUB"
   e <- expression
   return (Gosub e)
-  
+
 goto :: Parser (Statement a)
 goto = do
   string' "GOTO"
@@ -160,7 +255,7 @@ forstep = do
   string' "TO"
   e2 <- expression
   string' "STEP"
-  [s] <- constant
+  s <- constant
   return (ForStep i e1 e2 s)
 
 for :: Parser (Statement a)
@@ -183,7 +278,6 @@ dim = do
   i <- bid
   ls <- constantList
   return (Dim i ls)
-  
 
 dataStatement :: Parser (Statement a)
 dataStatement = do
@@ -191,22 +285,42 @@ dataStatement = do
   x <- constantList :: Parser [Constant a]
   return (SData x) 
 
---ds1 = do
+--Constants parser
+data Constant a = forall a . (Show a) => Constant { val :: a } 
+instance Show (Constant a) where
+  show (Constant a) = show a
+
+constantList :: Parser [Constant a]
+constantList = basicList constant (char ',')
+
+constant :: Parser (Constant a)
+constant = (basicReal >>= return . Constant) <||> (int >>= return . Constant) <||> (basicString >>= return . Constant) <?> "could not parse a constant"
+
+basicString :: Parser String
+basicString = tokens' $ do
+  c <- (char '"' <|> char '\'')
+  manyTill anyChar (char c) >>= return
   
-constantList = tokens' $ ((try cls) <|> (try constant) <?> "Could not parse: Data {Constant list}")
+int :: Parser Int  
+int = tokens' (many1 digit >>= return . read)
+
+basicReal :: Parser Double
+basicReal = tokens' $ do
+  i <- many1 digit
+  char '.'
+  i2 <- many1 digit
+  return (read (i ++ "." ++ i2))
+
+
+{-constantList = tokens' $ (cls <||> (try constant) <?> "Could not parse: Data {Constant list}")
 
 cls :: Parser [Constant a]
 cls = do 
   [c] <- constant
+  tokens' (char ',')
   cs  <- constantList
   return (c:cs)
-
-tokens' :: Parser a -> Parser a
-tokens' p = do
-  p' <- p
-  many ws
-  return p'
-
+-}
 
 data Access = AInput | AOutput 
 instance Show Access where
@@ -225,36 +339,12 @@ instance (Show a) => Show (Value a) where
   show (Vi a) = show a
   show (Vil a) = concatMap show a
   show (V a) = show a
+
   
-  
---Constants parser
-data Constant a = forall a . (Show a) => Constant { value :: a } 
-instance Show (Constant a) where
-  show (Constant a) = show a
-
-constant :: Parser [Constant a]
-constant = do
-  x <- (try real >>= return . Constant) 
-         <|> (try int >>= return . Constant) 
-         <|> (try basicString >>= return . Constant) 
-         <?> "could not parse a constant"
-  return [Constant x]
-
---basicString :: Parser (Constant a)
---basicString = (tokens' $ do 
---                  char '"'
---                  letters <- many1 letter 
---                  char '"'
---                  return  (Constant letters)) <?> "No BasicString value found"
-
---int :: Parser (Constant a)
---int = (tokens' (many1 digit)) >>= return . Constant . (read :: String -> Int) <?> "could not parse integer"
-
-real :: Parser Double
-real = (tokens' $ do 
-  n1 <- many1 digit 
-  char '.'
-  n2 <- many1 digit 
-  return $ (read (n1 ++ ['.'] ++ n2) :: Double) ) <?> "could not parse Real value number"
+tokens' :: Parser a -> Parser a
+tokens' p = do
+  p' <- p
+  many ws
+  return p'
 
 
