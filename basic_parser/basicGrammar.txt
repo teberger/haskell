@@ -1,24 +1,36 @@
 "Case Sensitive" = False 
 "Start Symbol"   = <Lines>
 
+check
 {String Chars} = {Printable} - ["]
+check
 {WS}           = {Whitespace} - {CR} - {LF}
 
+check
 NewLine        = {CR}{LF}|{CR}
+check
 Whitespace     = {WS}+
 
+check
 Remark         = REM{Space}{Printable}*
+check
 ID             = {Letter}[$%]? 
+check
 String         = '"'{String Chars}*'"' 
+check
 Integer        = {digit}+ 
+check
 Real           = {digit}+.{digit}+ 
 
+check
 <Lines>       ::= Integer <Statements> NewLine <Lines> 
                 | Integer <Statements> NewLine
 
+check
 <Statements>  ::= <Statement> ':' <Statements>
                 | <Statement>
 
+check
 <Statement>   ::= CLOSE '#' Integer
                 | DATA <Constant List> 
                 | DIM ID '(' <Integer List> ')'
@@ -44,25 +56,27 @@ Real           = {digit}+.{digit}+
                 | SYS <Value>
                 | WAIT <Value List>
                 | Remark
-
+check
 <Access>   ::= INPUT
              | OUPUT
-                   
+check                   
 <ID List>  ::= ID ',' <ID List> 
              | ID 
 
 <Value List>      ::= <Value> ',' <Value List> 
                     | <Value> 
-
+check
 <Constant List>   ::= <Constant> ',' <Constant List> 
                     | <Constant> 
 
+check
 <Integer List>    ::= Integer ',' <Integer List>
                     | Integer
                  
 <Expression List> ::= <Expression> ',' <Expression List> 
                     | <Expression> 
 
+check
 <Print List>      ::= <Expression> ';' <Print List>
                     | <Expression> 
                     |  

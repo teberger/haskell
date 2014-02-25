@@ -40,6 +40,7 @@ bl :: Parser (Int, Statements a)
 bl = do
   i <- int
   s <- statements
+  newline
   return (i,s)
   
 type Statements a = [Statement a]
@@ -109,8 +110,9 @@ string' = tokens' . string
 expression :: Parser (Expression a)
 expression = undefined
 
+--TODO FINISH EXPRESSION LIST PARSER
 value :: Parser (Value a)
-value = undefined
+value = (constant >>= return . Value) <||> ((between (char '(') (char ')') expression) >>= return . Value) <||> (bid >>= return . Value) <||> undefined --expressionList
 
 basicList :: Parser a -> Parser sep -> Parser [a]
 basicList itemParser sep = (b1 itemParser sep) <||> try (b2 itemParser) <?> "Failed parsing a list"
@@ -132,7 +134,7 @@ valueList :: Parser [Value a]
 valueList = basicList value (char ',')
 
 printList :: Parser [Expression a]
-printList = basicList expression (char ';')
+printList = basicList expression (char ';') <|> return []
 
 access :: Parser Access
 access = ((string' "INPUT") >> return AInput)
@@ -293,6 +295,9 @@ instance Show (Constant a) where
 constantList :: Parser [Constant a]
 constantList = basicList constant (char ',')
 
+intList :: Parser [Int]
+intList = basicList int (char ',')
+
 constant :: Parser (Constant a)
 constant = (basicReal >>= return . Constant) <||> (int >>= return . Constant) <||> (basicString >>= return . Constant) <?> "could not parse a constant"
 
@@ -333,13 +338,9 @@ instance Show (Expression a) where
 
 
 --Value parsers
-data Value a = forall a . (Show a) => Ve (Expression a) | Vi a | Vil [a] | V (Constant a) 
+data Value a = forall a . (Show a) => Value a
 instance (Show a) => Show (Value a) where 
-  show (Ve a) = show a
-  show (Vi a) = show a
-  show (Vil a) = concatMap show a
-  show (V a) = show a
-
+  show (Value a) = show a
   
 tokens' :: Parser a -> Parser a
 tokens' p = do
