@@ -1,6 +1,7 @@
-{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE ExistentialQuantification, FlexibleContexts #-}
 module Main where
 
+import Data.List
 import Text.ParserCombinators.Parsec
 import System.Environment
 import System.IO
@@ -14,9 +15,6 @@ main = do
 
 ws :: Parser ()
 ws = space >> return ()
-
---newline :: Parser ()
---newline = (try (string "\n\r") <|> try (string "\n")) >> return ()
 
 whitespace :: Parser ()
 whitespace = many ws >> return ()
@@ -33,7 +31,6 @@ bid = many1 letter
 
 type Lines a = [(Int, Statements a)]
 basiclines :: Parser (Lines a)
---basiclines = bl1 <||> bl2 <?> "Could not parse a Basic line: Integer Statement Newline Lines or Integer Statement Newline"
 basiclines = basicList bl newline
   
 bl :: Parser (Int, Statements a)
@@ -108,11 +105,83 @@ instance (Show a) => Show (Statement a) where
 string' = tokens' . string
 
 expression :: Parser (Expression a)
-expression = undefined
+expression = e1 <||> (try e2) <?> "Bombed out trying to parse an expression"
 
---TODO FINISH EXPRESSION LIST PARSER
+e1 :: Parser (Expression a)
+e1 = do
+  n <- andExpr
+  string' "OR"
+  e <- expression
+  return (Binary "OR" n e)
+  
+e2 :: Parser (Expression a)
+e2 = andExpr >>= return . (Unary "")
+  
+andExpr :: Parser (Expression a)
+andExpr = and1 <||> (try notExpr >>= return . Unary "") <?> "Bombed in an andExpr"
+
+and1 = do
+  e <- notExpr
+  string' "AND"
+  a <- andExpr
+  return (Binary "AND" e a)
+
+notExpr :: Parser (Expression a)
+notExpr = (string' "NOT" >> cmpExpr >>= return . (Unary "NOT")) <||> (cmpExpr >>= return . (Unary "")) <?> "Bombed a not expression"
+
+cmpExpr :: Parser (Expression a)
+cmpExpr = (cmp1 "=") <||> (cmp1 "<>") <||> (cmp1 "><") <||> (cmp1 ">") <||> (cmp1 ">=") <||> (cmp1 "<") <||> (cmp1 "<=") <||> (addExpr >>= return . (Unary "")) <?> "Bombed on a cmpExpr"
+
+cmp1 s = do
+  a <- addExpr
+  string' s
+  ce <- cmpExpr
+  return (Binary s a ce)
+
+addExpr :: Parser (Expression a) 
+addExpr = add1 "+" <||> add1 "-" <||> (mulExpr >>= return . (Unary "")) <?> "Bombed on parsing an addExpr"
+
+add1 s = do
+  m <- mulExpr 
+  string' s
+  ae <- addExpr
+  return (Binary s m ae)
+
+mulExpr :: Parser (Expression a)
+mulExpr = mul1 "*" <||> mul1 "/" <||> (negExpr >>= return . (Unary "")) <?> "Bombed on parsing a mulExpr"
+
+mul1 s = do
+  n <- negExpr
+  string' s
+  me <- mulExpr
+  return (Binary s n me)
+
+negExpr :: Parser (Expression a)
+negExpr = (string' "-" >> powExpr >>= (return . (Unary "-"))) <||> (powExpr >>= return . (Unary "")) <?> "Bombed parsing a negated expression"
+
+powExpr :: Parser (Expression a)
+powExpr = pow1 <||> (value >>= return . (Unary ""))
+  
+pow1 :: Parser (Expression a)
+pow1 = do
+  p <- powExpr
+  string' "^"
+  v <- value
+  return (BinaryV "^" p v)
+  
+expressionList :: Parser [Expression a]
+expressionList = basicList expression (char ',')
+
 value :: Parser (Value a)
-value = (constant >>= return . Value) <||> ((between (char '(') (char ')') expression) >>= return . Value) <||> (bid >>= return . Value) <||> undefined --expressionList
+value = (constant >>= return . Value) <||> ((between (char '(') (char ')') expression) >>= return . Value) <||> (bid >>= return . Value) <||> try value' <?> "Coult not parse a Value"
+
+value' :: Parser (Value a)
+value' = do
+  i <- bid 
+  string' "("
+  es <- expressionList
+  string' ")"
+  return (Value (i,es))
 
 basicList :: Parser a -> Parser sep -> Parser [a]
 basicList itemParser sep = (b1 itemParser sep) <||> try (b2 itemParser) <?> "Failed parsing a list"
@@ -332,10 +401,14 @@ instance Show Access where
   show AInput = "INPUT"
   show AOutput = "OUTPUT"
 
-data Expression a = forall a . (Show a) => Expression a
-instance Show (Expression a) where
-  show (Expression a ) = show a
+data Expression a = forall a . (Show a) => Binary String a (Expression a)
+                  | forall a . (Show a) => Unary String a
+                  | forall a . (Show a) => BinaryV String a (Value a)
 
+instance Show (Expression a) where
+  show (Binary s a ls) = (show a) ++ s ++ (show ls)
+  show (Unary s a) = s ++ (show a)
+  show (BinaryV s a v) = (show a) ++ s ++ (show v)
 
 --Value parsers
 data Value a = forall a . (Show a) => Value a
