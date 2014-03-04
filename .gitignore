@@ -2,3 +2,5 @@
 *.hi
 *.o
 *.tar.gz
+./bayes_classifier/20news-bydate*
+./basic_parser/basicGrammar.txt
