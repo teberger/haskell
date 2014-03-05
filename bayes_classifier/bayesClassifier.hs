@@ -13,3 +13,5 @@ main = do
 
 
   return ()
+
+types = ["train","test"]
