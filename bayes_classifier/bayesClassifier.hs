@@ -12,7 +12,7 @@ main = do
   return ()
 
 
-type Document = [(DocumentNumber, WordIndex, WordCount)]
+type Document = (DocumentNumber, WordIndex, WordCount)
 type DocumentNumber = Int
 type WordIndex = Int
 type WordCount = Int
