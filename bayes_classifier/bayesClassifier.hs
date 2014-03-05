@@ -1,5 +1,11 @@
 module Main where
 
+import System.Environment
+
 main :: IO ()
-main = return ()
+main = do
+  [vocab:_] <- getArgs
+  return ()
+
+
 
