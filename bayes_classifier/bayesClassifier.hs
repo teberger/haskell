@@ -7,5 +7,5 @@ import Control.Monad(liftM)
 main :: IO ()
 main = do
   [vocab:dataLoc:_] <- getArgs
-  vocabulary <- liftM (`zip` [1..]) $ hContents =<< openFile vocab ReadMode
+  vocabulary <- liftM (`zip` [1..]) $ hReadContents =<< openFile vocab ReadMode
   return ()
