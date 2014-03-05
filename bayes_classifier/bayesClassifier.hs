@@ -4,7 +4,7 @@ import System.Environment
 
 main :: IO ()
 main = do
-  [vocab:_] <- getArgs
+  [vocab:dataLoc:_] <- getArgs
   return ()
 
 
