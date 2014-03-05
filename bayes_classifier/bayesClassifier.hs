@@ -15,7 +15,7 @@ main = do
   vocab:dataLoc:_ <- getArgs
   vocabulary <- liftM (`zip` [1..]) . fmap lines $ hGetContents =<< openFile vocab ReadMode
   
-  train_data  <- groupBy ((==) . fst) . splitAt (== ' ') . fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode
+  train_data  <- groupBy ((==) . fst) . map (splitAt (== ' ')) . fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode
   train_label <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode  
   train_map   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.map"  ) ReadMode
   
