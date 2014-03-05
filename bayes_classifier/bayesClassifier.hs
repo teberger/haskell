@@ -8,10 +8,7 @@ main :: IO ()
 main = do
   vocab:dataLoc:_ <- getArgs
   vocabulary <- liftM (`zip` [1..]) . fmap lines $ hGetContents =<< openFile vocab ReadMode
-  
-
-
-
+    
   return ()
 
 
