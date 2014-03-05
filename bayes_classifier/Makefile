@@ -6,5 +6,8 @@ clean:
 compile: 
 	ghc --make bayesClassifier.hs -o classifier
 
+run: compile
+	./classifer vocabulary 20news-bydate/matlab/
+
 edit:
 	emacs -nw bayesClassifier.hs
