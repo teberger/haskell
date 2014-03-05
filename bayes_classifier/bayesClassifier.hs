@@ -14,4 +14,6 @@ main = do
 
   return ()
 
+
 types = ["train","test"]
+types' = ["data","label","map"]
