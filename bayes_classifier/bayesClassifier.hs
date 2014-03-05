@@ -9,5 +9,3 @@ main = do
   vocab:dataLoc:_ <- getArgs
   vocabulary <- liftM (`zip` [1..]) $ hGetContents =<< openFile vocab ReadMode
   return ()
-  
-  
