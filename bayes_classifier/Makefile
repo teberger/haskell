@@ -1,7 +1,7 @@
 default: clean
 
 clean:
-	rm *.hi *.o *~
+	rm *.hi *.o *~ classifier
 
 compile: 
 	ghc --make bayesClassifier.hs -o classifier
