@@ -35,5 +35,5 @@ main = do
 types = ["train","test"]
 types' = ["data","label","map"]
 
-makeDoc :: [String] -> Document
-makeDoc ls = map ((\(x,y) -> (read x :: Int, read y :: Int)) . break (== ' ') . snd . (break (== ' ' ))) ls
+--makeDoc :: [String] -> Document
+makeDoc ls = map ({-(\(x,y) -> (read x :: Int, read y :: Int)) .-} break (== ' ') . snd . (break (== ' ' ))) ls
