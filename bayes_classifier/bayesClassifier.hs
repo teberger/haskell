@@ -23,9 +23,9 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let f = (\x y -> (x !! 0) == (y !! 0))            :: String -> String -> Bool
-      train_data_temp = groupBy f train_data_lines  :: [[String]]
-      test_data_temp  = groupBy f test_data_lines   :: [[String]]
+  let f = (\x y -> (x !! 0) == (y !! 0))           
+      train_data_temp = groupBy f train_data_lines 
+      test_data_temp  = groupBy f test_data_lines  
       trainData = map makeDoc train_data_temp
       testData  = map makeDoc test_data_temp
 
