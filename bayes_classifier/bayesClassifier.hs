@@ -29,7 +29,7 @@ main = do
 --      train_data = map (groupBy ((==) . fst)) 
 
 
-  print $ train_data_lines !! 0
+  print $ train_data_lines
   return ()
 
 types = ["train","test"]
