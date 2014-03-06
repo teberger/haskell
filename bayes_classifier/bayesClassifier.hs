@@ -26,7 +26,7 @@ main = do
   let f = ((==) . (!! 0)) :: String -> String -> Bool
 --      train_data_temp = groupBy f train_data_lines
 
-  print $ train_data_temp !! 0
+--  print $ train_data_temp !! 0
   return ()
 
 types = ["train","test"]
