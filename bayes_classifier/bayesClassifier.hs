@@ -23,8 +23,9 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let train_data_temp = 
+  let train_data_temp = groupBy ((==) . (!! 0)) train_data_lines
 
+  print $ train_data_temp !! 0
   return ()
 
 types = ["train","test"]
