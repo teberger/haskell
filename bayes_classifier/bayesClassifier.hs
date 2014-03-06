@@ -28,6 +28,8 @@ main = do
 --  let train_data_temp = 
 --      train_data = map (groupBy ((==) . fst)) 
 
+
+  print $ train_data_lines !! 0
   return ()
 
 types = ["train","test"]
