@@ -26,6 +26,8 @@ main = do
   let f = (\x y -> (x !! 0) == (y !! 0))            :: String -> String -> Bool
       train_data_temp = groupBy f train_data_lines  :: [[String]]
       test_data_temp  = groupBy f test_data_lines   :: [[String]]
+      trainData = map makeDoc train_data_temp
+      testData  = map makeDoc test_data_temp
 
   print $ train_data_temp !! 0
   return ()
