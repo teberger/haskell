@@ -29,7 +29,7 @@ main = do
       trainData = map makeDoc train_data_temp
       testData  = map makeDoc test_data_temp
 
-  print $ trainData !! (length trainData)-1
+  print $ trainData !! ((length trainData)-1)
   return ()
 
 types = ["train","test"]
