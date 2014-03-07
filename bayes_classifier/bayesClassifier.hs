@@ -30,7 +30,7 @@ main = do
       trainData = zip train_label_lines trainDocs
       testDocs  = map makeDoc test_data_temp
       testData  = zip test_label_lines testDocs
-  return ()
+f  return ()
 
 types = ["train","test"]
 types' = ["data","label","map"]
