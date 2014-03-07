@@ -30,8 +30,6 @@ main = do
       trainData = zip train_label_lines trainDocs
       testDocs  = map makeDoc test_data_temp
       testData  = zip test_label_lines testDocs
-
-  print $ trainData !! ((length trainData)-1)
   return ()
 
 types = ["train","test"]
