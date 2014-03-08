@@ -6,6 +6,7 @@ import Control.Monad (liftM)
 import Data.List
 import Data.Array.Base
 import Data.Array.Unboxed
+import Data.List.Extras.Argmax
 
 type Instance = (LabelIdx, Document)
 
