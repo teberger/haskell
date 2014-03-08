@@ -36,7 +36,7 @@ main = do
   
   let vocab  = V.fromList vocabulary :: V.Vector Word
       alpha  = 1.0 / (fromIntegral $ V.length vocab)
-      labels = listArray (1,(length labels_ln)) labels_ln   :: Array Int Label
+      labels = V.fromList labels_ln  :: V.Vector Label
       
       f = (\x y -> (fst x) == (fst y))           
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
