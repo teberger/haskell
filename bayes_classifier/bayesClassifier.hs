@@ -16,8 +16,9 @@ type WordCount = Int
 
 main :: IO ()
 main = do
-  vocab:dataLoc:_ <- getArgs
+  vocab:labels:dataLoc:_ <- getArgs
   vocabulary <- fmap lines $ hGetContents =<< openFile vocab ReadMode
+  labels     <- fmap lines $ hGetContents =<< openFile labels ReadMode
   
   train_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
   train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
