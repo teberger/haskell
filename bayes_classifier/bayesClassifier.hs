@@ -43,8 +43,8 @@ main = do
       trainDocs = map makeDoc train_data_temp 
       testDocs  = map makeDoc test_data_temp
       
-      trainData = zip train_label_lines trainDocs :: [Instance]
-      testData  = zip test_label_lines testDocs   :: [Instance]
+      trainData = (map (read :: String -> Int) train_label_lines) `zip` trainDocs :: [Instance]
+      testData  = (map (read :: String -> Int) test_label_lines)  `zip` testDocs  :: [Instance]
 
   print $ numElements vocab
   return ()
