@@ -63,3 +63,6 @@ getLabel = fst
 getDocument = snd
 getWordIdx = fst
 getWordCount = snd
+
+
+type DocumentDistribution = V.Vector Double
