@@ -39,4 +39,3 @@ makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) .
                   snd . 
                   (break (== ' ' ))) 
              ls
-             
