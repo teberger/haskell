@@ -16,7 +16,7 @@ type WordCount = Int
 main :: IO ()
 main = do
   vocab:dataLoc:_ <- getArgs
-  vocabulary <- liftM (\x -> listArray (1,(length x)) x) . fmap lines $ hGetContents =<< openFile vocab ReadMode
+  vocabulary <- fmap lines $ hGetContents =<< openFile vocab ReadMode
   
   train_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
   train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
@@ -26,7 +26,8 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let f = (\x y -> (fst x) == (fst y))           
+  let vocab = listArray (1,(length vocabulary)) vocabulary
+      f = (\x y -> (fst x) == (fst y))           
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
       test_data_temp  = groupBy f (map (break (== ' '))test_data_lines)
       trainDocs = map makeDoc train_data_temp
