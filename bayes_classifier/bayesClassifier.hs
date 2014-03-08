@@ -39,8 +39,8 @@ main = do
   
   let vocab  = V.fromList vocabulary               :: V.Vector Word
       labels = V.fromList labels_ln                :: V.Vector Label
-      nVocab = fromIntegral $ V.length vocab
-      nLabel = fromIntegral $ V.length labels
+      nVocab = fromIntegral $ V.length vocab ::Double
+      nLabel = fromIntegral $ V.length labels :: Double
       alpha  = 1 / nVocab
       
       f = (\x y -> (fst x) == (fst y))
