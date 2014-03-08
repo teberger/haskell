@@ -5,7 +5,7 @@ import System.IO
 import Control.Monad (liftM)
 import Data.List
 
-type Instance = (Document, Label)
+type Instance = (Label, Document)
 type Label = String
 type Document = [(WordIndex, WordCount)]
 type DocumentNumber = Int
