@@ -35,7 +35,7 @@ main = do
       testDocs  = map makeDoc test_data_temp
       testData  = zip test_label_lines testDocs :: [Instance]
 
-  print $ length testData
+  print $ numElements vocab
   return ()
 
 makeDoc :: [(String, String)] -> Document
