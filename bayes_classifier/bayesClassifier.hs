@@ -31,10 +31,10 @@ main = do
       f = (\x y -> (fst x) == (fst y))           
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
       test_data_temp  = groupBy f (map (break (== ' '))test_data_lines)
-      trainDocs = map makeDoc train_data_temp
-      trainData = zip train_label_lines trainDocs
+      trainDocs = map makeDoc train_data_temp 
+      trainData = zip train_label_lines trainDocs :: [Instance]
       testDocs  = map makeDoc test_data_temp
-      testData  = zip test_label_lines testDocs :: [Instance]
+      testData  = zip test_label_lines testDocs   :: [Instance]
 
   print $ numElements vocab
   return ()
@@ -45,5 +45,4 @@ makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) .
                   tail .  
                   snd)
              ls
-
 
