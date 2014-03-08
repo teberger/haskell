@@ -40,7 +40,7 @@ main = do
       labels = V.fromList labels_ln                :: V.Vector Label
       alpha  = 1 / (fromIntegral $ V.length vocab) :: Double
       
-      f = (\x y -> (fst x) == (fst y))           
+      f = \x y -> (fst x) == (fst y)
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
       test_data_temp  = groupBy f (map (break (== ' ')) test_data_lines )
       
