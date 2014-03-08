@@ -4,7 +4,7 @@ import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import Data.List
-import Data.Array.Base
+--import Data.Array.Base
 import Data.Array.Unboxed
 import Data.List.Extras.Argmax
 
@@ -47,7 +47,7 @@ main = do
       trainData = (map (read :: String -> Int) train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map (read :: String -> Int) test_label_lines)  `zip` testDocs  :: [Instance]
 
-  print $ numElements vocab
+--  print $ numElements vocab
   return ()
 
 makeDoc :: [(String, String)] -> Document
