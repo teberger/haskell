@@ -21,6 +21,7 @@ type WordIdx = Int
 type WordCount = Int
 
 type DocumentClassDistribution = V.Vector Double
+type WordDistribution = V.Vector Double
 
 main :: IO ()
 main = do
@@ -38,9 +39,11 @@ main = do
   
   let vocab  = V.fromList vocabulary               :: V.Vector Word
       labels = V.fromList labels_ln                :: V.Vector Label
-      alpha  = 1 / (fromIntegral $ V.length vocab) :: Double
+      nVocab = fromIntegral $ V.length vocab 
+      nLabel = fronIntegral $ V.length labels
+      alpha  = 1 / (fromIntegral $ nVocab) :: Double
       
-      f = \x y -> (fst x) == (fst y)
+      f = (\x y -> (fst x) == (fst y))
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
       test_data_temp  = groupBy f (map (break (== ' ')) test_data_lines )
       
@@ -49,8 +52,8 @@ main = do
       
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
-      initDist = V.replicate 20 (1.0 / 20.0) :: DocumentClassDistribution
-
+      initClassDist = V.replicate nLabel (1.0 / nLabel)        :: DocumentClassDistribution
+      initWordsDist = V.replicate nWords (1.0 / nWords)        :: WordDistribution
   print $ V.length vocab
   return ()
 
