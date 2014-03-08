@@ -34,8 +34,8 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let vocab  = listArray (1,(length vocabulary)) vocabulary :: Array Int Word
-      alpha  = 1.0 / (fromIntegral . snd . bounds $ vocab)
+  let vocab  = V.fromList vocabulary :: Array Int Word
+      alpha  = 1.0 / (fromIntegral . snd .  $ vocab)
       labels = listArray (1,(length labels_ln)) labels_ln   :: Array Int Label
       
       f = (\x y -> (fst x) == (fst y))           
