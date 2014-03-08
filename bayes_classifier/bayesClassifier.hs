@@ -30,8 +30,6 @@ main = do
       testData  = zip test_label_lines  $ map makeDoc test_data_temp
 
   print $ length trainData
-  
-  
   return ()
 
 makeDoc :: [String] -> Document
