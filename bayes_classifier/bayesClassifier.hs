@@ -6,6 +6,7 @@ import Control.Monad (liftM)
 import Data.List
 import qualified Data.Vector as V
 import Data.List.Extras.Argmax
+import GSL.Random.Dist
 
 --INSTANCE TYPE SYNONYM
 type Instance = (LabelIdx, Document)
