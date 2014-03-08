@@ -57,6 +57,7 @@ makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) .
                   snd)
              ls
 
+
 --Renaming methods to make it easier to read
 getLabel = fst
 getDocument = snd
