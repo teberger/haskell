@@ -8,15 +8,15 @@ import Data.List
 import Data.Array.Unboxed
 import Data.List.Extras.Argmax
 
---INSTANCE DEFNITITION
+--INSTANCE TYPE SYNONYM
 type Instance = (LabelIdx, Document)
---LABEL DEFINITION
+--LABEL TYPE SYNONYM
 type Label = String
 type LabelIdx = Int
---DOCUMENT DEFINITION
+--DOCUMENT TYPE SYNONYM
 type Document = [(WordIdx, WordCount)]
 type DocumentNumber = Int
---WORD DEFINITION
+--WORD TYPE SYNONYM
 type Word = String
 type WordIdx = Int
 type WordCount = Int
