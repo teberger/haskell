@@ -21,9 +21,6 @@ type Word = String
 type WordIdx = Int
 type WordCount = Int
 
-type DocumentClassDistribution = V.Vector Double
-type DirichletDistribution = V.Vector Double
-
 main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
@@ -53,8 +50,8 @@ main = do
       
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
-      initClassDist = V.replicate (V.length labels) (1.0 / nLabel)     :: DocumentClassDistribution
-      initWordsDist = V.replicate (V.length vocab) (1 + 1.0 / nVocab)  :: DirichletDistribution
+      initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
+      initWordsAlphas = V.replicate (V.length vocab) (1 + alpha)
 
   print $ V.length vocab
   return ()
