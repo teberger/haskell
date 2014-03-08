@@ -1,10 +1,10 @@
 module Main where
 
---import System.Environment
+import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import Data.List
-import Data.Array.Base
+--import Data.Array.Base
 import Data.Array.Unboxed
 import Data.List.Extras.Argmax
 
