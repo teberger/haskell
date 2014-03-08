@@ -4,7 +4,7 @@ import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import Data.List
---import Data.Array.Base
+import Data.Array.Base
 import Data.Array.Unboxed
 import Data.List.Extras.Argmax
 
@@ -36,6 +36,7 @@ main = do
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
   let vocab  = listArray (1,(length vocabulary)) vocabulary :: Array Int Word
+      alpha  = 1.0 / (fromIntegral . snd . bounds $ vocab)
       labels = listArray (1,(length labels_ln)) labels_ln   :: Array Int Label
       
       f = (\x y -> (fst x) == (fst y))           
