@@ -11,6 +11,7 @@ type Instance = (Label, Document)
 type Label = String
 type Document = [(WordIndex, WordCount)]
 type DocumentNumber = Int
+type Word = String
 type WordIndex = Int
 type WordCount = Int
 
@@ -18,7 +19,7 @@ main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
   vocabulary <- fmap lines $ hGetContents =<< openFile vocab ReadMode
-  labels     <- fmap lines $ hGetContents =<< openFile labels ReadMode
+  labels_ln  <- fmap lines $ hGetContents =<< openFile labels ReadMode
   
   train_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
   train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
@@ -28,7 +29,8 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let vocab = listArray (1,(length vocabulary)) vocabulary :: Array Int String
+  let vocab = listArray (1,(length vocabulary)) vocabulary :: Array Int Word
+      labels = listArray (1,(length labels_ln)) labels_ln  :: Array Int Label
       f = (\x y -> (fst x) == (fst y))           
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
       test_data_temp  = groupBy f (map (break (== ' '))test_data_lines)
