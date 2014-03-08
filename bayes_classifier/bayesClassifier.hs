@@ -48,7 +48,7 @@ main = do
       trainData = (map (read :: String -> Int) train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map (read :: String -> Int) test_label_lines)  `zip` testDocs  :: [Instance]
 
---  print $ numElements vocab
+  print $ V.length vocab
   return ()
 
 makeDoc :: [(String, String)] -> Document
