@@ -4,6 +4,7 @@ import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import Data.List
+import Data.Array.Unboxed
 
 type Instance = (Label, Document)
 type Label = String
@@ -42,3 +43,5 @@ makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) .
                   tail .  
                   snd)
              ls
+
+
