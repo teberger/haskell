@@ -1,7 +1,7 @@
 module Main where
 
-import System.Environment
---import System.IO
+--import System.Environment
+import System.IO
 import Control.Monad (liftM)
 import Data.List
 import Data.Array.Base
