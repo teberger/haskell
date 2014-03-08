@@ -7,7 +7,7 @@ compile:
 	ghc --make bayesClassifier.hs -o classifier
 
 run: compile
-	./classifier vocabulary.txt 20news-bydate/matlab/
+	./classifier vocabulary.txt data/
 
 edit:
 	emacs -nw bayesClassifier.hs
