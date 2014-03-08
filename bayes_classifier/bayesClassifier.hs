@@ -45,8 +45,8 @@ main = do
       trainDocs = map makeDoc train_data_temp 
       testDocs  = map makeDoc test_data_temp
       
-      trainData = (map (read ) train_label_lines) `zip` trainDocs :: [Instance]
-      testData  = (map (read :: String -> Int) test_label_lines)  `zip` testDocs  :: [Instance]
+      trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
+      testData  = (map read test_label_lines)  `zip` testDocs  :: [Instance]
 
   print $ V.length vocab
   return ()
