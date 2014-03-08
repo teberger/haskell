@@ -20,7 +20,7 @@ type Word = String
 type WordIdx = Int
 type WordCount = Int
 
-type DocumentDistribution = V.Vector Double
+type DocumentClassDistribution = V.Vector Double
 
 main :: IO ()
 main = do
@@ -49,7 +49,7 @@ main = do
       
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
-      initDist = V.replicate 20 (1.0 / 20.0)
+      initDist = V.replicate 20 (1.0 / 20.0) :: DocumentClassDistribution
 
   print $ V.length vocab
   return ()
