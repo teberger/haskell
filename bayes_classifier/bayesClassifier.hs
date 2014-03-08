@@ -26,14 +26,11 @@ main = do
   let f = (\x y -> (x !! 0) == (y !! 0))           
       train_data_temp = groupBy f train_data_lines 
       test_data_temp  = groupBy f test_data_lines  
-      trainData = map makeDoc train_data_temp
-      testData  = map makeDoc test_data_temp
+      trainData = zip train_label_lines $ map makeDoc train_data_temp
+      testData  = zip test_label_lines  $ map makeDoc test_data_temp
 
   print $ trainData !! 0
   return ()
-
-types = ["train","test"]
-types' = ["data","label","map"]
 
 makeDoc :: [String] -> Document
 makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
@@ -42,3 +39,4 @@ makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) .
                   snd . 
                   (break (== ' ' ))) 
              ls
+             
