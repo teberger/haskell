@@ -23,21 +23,20 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let f = (\x y -> (x !! 0) == (y !! 0))           
-      train_data_temp = groupBy f train_data_lines
-      test_data_temp  = groupBy f test_data_lines 
+  let f = (\x y -> (fst x) == (fst y))           
+      train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
+      test_data_temp  = groupBy f (map (break (== ' '))test_data_lines)
       trainDocs = map makeDoc train_data_temp
       trainData = zip train_label_lines trainDocs
       testDocs  = map makeDoc test_data_temp
       testData  = zip test_label_lines testDocs
 
-  print $ length train_data_lines
+  print $ length 
   return ()
 
-makeDoc :: [String] -> Document
+makeDoc :: [(String, String)] -> Document
 makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
                   break (== ' ') . 
                   tail .  
-                  snd . 
-                  (break (== ' ' ))) 
+                  snd)
              ls
