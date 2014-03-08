@@ -26,7 +26,7 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let vocab = listArray (1,(length vocabulary)) vocabulary 
+  let vocab = listArray (1,(length vocabulary)) vocabulary :: Array Int String
       f = (\x y -> (fst x) == (fst y))           
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
       test_data_temp  = groupBy f (map (break (== ' '))test_data_lines)
