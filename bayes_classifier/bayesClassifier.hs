@@ -5,6 +5,8 @@ import System.IO
 import Control.Monad (liftM)
 import Data.List
 
+type Intance = (Document, Label)
+type Label = String
 type Document = [(WordIndex, WordCount)]
 type DocumentNumber = Int
 type WordIndex = Int
@@ -29,7 +31,7 @@ main = do
       trainDocs = map makeDoc train_data_temp
       trainData = zip train_label_lines trainDocs
       testDocs  = map makeDoc test_data_temp
-      testData  = zip test_label_lines testDocs
+      testData  = zip test_label_lines testDocs :: 
 
   print $ length testData
   return ()
