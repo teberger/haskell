@@ -20,6 +20,8 @@ type Word = String
 type WordIdx = Int
 type WordCount = Int
 
+type DocumentDistribution = V.Vector Double
+
 main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
@@ -65,4 +67,3 @@ getWordIdx = fst
 getWordCount = snd
 
 
-type DocumentDistribution = V.Vector Double
