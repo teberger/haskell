@@ -35,8 +35,8 @@ main = do
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
   let vocab  = V.fromList vocabulary                 :: V.Vector Word
-      alpha  = 1.0 / (fromIntegral $ V.length vocab) :: Double
       labels = V.fromList labels_ln                  :: V.Vector Label
+      alpha  = 1 / (fromIntegral $ V.length vocab) :: Double      
       
       f = (\x y -> (fst x) == (fst y))           
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
