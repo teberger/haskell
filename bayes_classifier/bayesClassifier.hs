@@ -52,8 +52,8 @@ main = do
       
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
-      initClassDist = V.replicate (nLabel) (1.0 / (V.length labels))    :: DocumentClassDistribution
-      initWordsDist = V.replicate (nVocab) (1.0 / (V.length vocab))     :: WordDistribution
+      initClassDist = V.replicate (V.length labels) (1.0 / nLabels)    :: DocumentClassDistribution
+      initWordsDist = V.replicate (V.length vocab) (1.0 / nVocab)     :: WordDistribution
   print $ V.length vocab
   return ()
 
