@@ -4,6 +4,7 @@ import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import Data.List
+import Data.Array.Base
 import Data.Array.Unboxed
 
 type Instance = (Label, Document)
