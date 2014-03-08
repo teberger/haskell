@@ -8,14 +8,15 @@ import Data.List
 import Data.Array.Unboxed
 import Data.List.Extras.Argmax
 
+--INSTANCE DEFNITITION
 type Instance = (LabelIdx, Document)
-
+--LABEL DEFINITION
 type Label = String
 type LabelIdx = Int
-
+--DOCUMENT DEFINITION
 type Document = [(WordIdx, WordCount)]
 type DocumentNumber = Int
-
+--WORD DEFINITION
 type Word = String
 type WordIdx = Int
 type WordCount = Int
@@ -56,7 +57,6 @@ makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) .
                   tail .  
                   snd)
              ls
-
 
 --Renaming methods to make it easier to read
 getLabel = fst
