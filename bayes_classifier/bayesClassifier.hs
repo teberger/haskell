@@ -31,7 +31,7 @@ main = do
       trainDocs = map makeDoc train_data_temp
       trainData = zip train_label_lines trainDocs
       testDocs  = map makeDoc test_data_temp
-      testData  = zip test_label_lines testDocs :: Instance
+      testData  = zip test_label_lines testDocs :: [Instance]
 
   print $ length testData
   return ()
