@@ -31,6 +31,7 @@ main = do
 
   print $ length trainData
   
+  
   return ()
 
 makeDoc :: [String] -> Document
