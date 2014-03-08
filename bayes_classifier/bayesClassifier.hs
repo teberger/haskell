@@ -4,7 +4,7 @@ import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import Data.List
-import Data.Vector
+import qualified Data.Vector as V
 import Data.List.Extras.Argmax
 
 --INSTANCE TYPE SYNONYM
