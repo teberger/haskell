@@ -40,7 +40,7 @@ main = do
   let vocab  = V.fromList vocabulary               :: V.Vector Word
       labels = V.fromList labels_ln                :: V.Vector Label
       nVocab = fromIntegral $ V.length vocab 
-      nLabel = fronIntegral $ V.length labels
+      nLabel = fromIntegral $ V.length labels
       alpha  = 1 / (fromIntegral $ nVocab) :: Double
       
       f = (\x y -> (fst x) == (fst y))
@@ -53,7 +53,7 @@ main = do
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
       initClassDist = V.replicate nLabel (1.0 / nLabel)        :: DocumentClassDistribution
-      initWordsDist = V.replicate nWords (1.0 / nWords)        :: WordDistribution
+      initWordsDist = V.replicate nVocab (1.0 / nVocab)        :: WordDistribution
   print $ V.length vocab
   return ()
 
