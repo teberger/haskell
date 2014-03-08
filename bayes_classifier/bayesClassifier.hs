@@ -54,6 +54,7 @@ main = do
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
       initClassDist = V.replicate (V.length labels) (1.0 / nLabel) :: DocumentClassDistribution
       initWordsDist = V.replicate (V.length vocab) (1.0 / nVocab)  :: WordDistribution
+
   print $ V.length vocab
   return ()
 
