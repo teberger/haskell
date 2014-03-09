@@ -59,7 +59,7 @@ main = do
 makeDoc :: [(String, String)] -> Document
 makeDoc ls = map ((\(x,y) -> (read x, read (tail y))) . 
                   break (== ' ') . 
-                  tail .  --removes the leading ' '
+                  tail .  --removes the leading ' ' (space)
                   snd)
              ls
 
