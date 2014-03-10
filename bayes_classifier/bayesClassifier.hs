@@ -8,6 +8,7 @@ import Control.Monad (liftM)
 import Data.Array.Repa
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
+import qualified Prelude as P 
 
 --INSTANCE TYPE SYNONYM
 type Instance = (LabelIdx, Document)
