@@ -63,12 +63,12 @@ main = do
 -}
   return ()
 
---makeDoc :: [(String, String)] -> Document
---makeDoc ls = P.map ((\(x,y) -> (P.read x :: Int, P.read (P.tail y) :: Int)) . 
---                  break (== ' ') . 
---                  P.tail .  --removes the leading ' '
---                  P.snd)
---             ls
+makeDoc :: [(String, String)] -> Document
+makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
+                  break (== ' ') . 
+                  tail .  --removes the leading ' '
+                  snd)
+             ls
 
 --Renaming methods to make it easier to read
 --getLabel = P.fst
