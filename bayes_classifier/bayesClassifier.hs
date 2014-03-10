@@ -61,8 +61,9 @@ main = do
       initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
       initWordsAlphas = V.replicate (V.length vocab) (1 + alpha)
 
-  print $ V.length vocab
+
 -}
+  print $ length trainDocs
   return ()
 
 makeDoc :: [(String, String)] -> Document
