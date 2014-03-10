@@ -5,7 +5,7 @@ module Main where
 import System.Environment
 import System.IO
 import Control.Monad (liftM)
-import Data.ByteString.Word8
+import Data.ByteString.Char8
 import Data.Array.Repa hiding ((++))
 import qualified Data.Vector.Unboxed as V
 import Data.List.Extras.Argmax
