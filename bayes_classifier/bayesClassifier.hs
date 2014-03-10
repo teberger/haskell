@@ -64,11 +64,11 @@ main = do
   return ()
 
 makeDoc :: [(String, String)] -> Document
-makeDoc ls = fromListVector (Z :. Int) $ map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
-                                   break (== ' ') . 
-                                   tail .  --removes the leading ' '
-                                   snd)
-                              ls
+makeDoc ls = fromListVector (Z :. (length ls)) $ map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
+                                                      break (== ' ') . 
+                                                      tail .  --removes the leading ' '
+                                                      snd)
+                                                 ls
 
 --Renaming methods to make it easier to read
 --getLabel = P.fst
