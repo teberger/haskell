@@ -54,8 +54,6 @@ main = do
       
 --      wordLikelyhoods =  :: Array U (Z :. LabelIdx :. WordIndex) Double
 {-  
-
-      
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
       initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
