@@ -39,8 +39,8 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let vocab = fromListVector (Z :. (length vocabulary :: Int)) vocabulary :: Array V (Z :. Int) String
-      labels = fromListVector (Z :. (length labels_ln :: Int)) labels_ln :: Array V (Z :. Int) String
+  let vocab = fromListVector (Z :. (length vocabulary :: Int)) vocabulary :: Array V (Z :. WordIdx) String
+      labels = fromListVector (Z :. (length labels_ln :: Int)) labels_ln :: Array V (Z :. LabelIdx) String
       nVocab = size (extent vocab)  :: Int
       nLabel = size (extent labels) :: Int
       alpha  = 1 / (fromIntegral nVocab) :: Double
