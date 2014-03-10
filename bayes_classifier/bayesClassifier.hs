@@ -45,14 +45,16 @@ main = do
       nLabel = size (extent labels) :: Int
       alpha  = 1 / (fromIntegral nVocab) :: Double
       
---      wordLikelyhoods =  :: Array U (Z :. Int :. Int) Int
-{-  
       f = (\x y -> (fst x) == (fst y))
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
-      test_data_temp  = groupBy f (map (break (== ' ')) test_data_lines )
+      test_data_temp  = groupBy f (map (break (== ' ')) test_data_lines )      
       
       trainDocs = map makeDoc train_data_temp 
       testDocs  = map makeDoc test_data_temp
+      
+--      wordLikelyhoods =  :: Array U (Z :. Int :. Int) Int
+{-  
+
       
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
@@ -65,10 +67,10 @@ main = do
 
 makeDoc :: [(String, String)] -> Document
 makeDoc ls = fromListUnboxed (Z :. (length ls)) $ map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
-                                                      break (== ' ') . 
-                                                      tail .  --removes the leading ' '
-                                                      snd)
-                                                 ls
+                                                       break (== ' ') . 
+                                                       tail .  --removes the leading ' '
+                                                       snd)
+                                                  ls
 
 --Renaming methods to make it easier to read
 --getLabel = P.fst
