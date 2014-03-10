@@ -53,8 +53,8 @@ main = do
       trainDocs = map makeDoc train_data_temp
       testDocs  = map makeDoc test_data_temp
       
-      trainData = computeS $ fromListVector (Z :. Int) $ (map read train_label_lines) `zip` trainDocs :: Instances
---      testData  = (map read test_label_lines ) `zip` testDocs  :: Instances
+      trainData =  (map read train_label_lines) `zip` trainDocs :: [Instance]      
+      testData  = (map read test_label_lines ) `zip` testDocs   :: [Instance]
       
       wordLikelyhoods = computeS $ fromFunction (Z :. nLabel :. nVocab) (\(Z :. li :. wi) -> 0.0) :: Array U (Z :. LabelIdx :. WordIdx) Double
       
