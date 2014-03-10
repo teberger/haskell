@@ -9,7 +9,6 @@ import Data.List
 import Data.Array.Repa hiding ((++), map)
 import qualified Data.Array.Repa as R ((++), map)
 import Data.Array.Repa.Repr.Vector
---import qualified Data.Vector as V
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
