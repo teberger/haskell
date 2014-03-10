@@ -57,7 +57,7 @@ main = do
 
   print $ V.length vocab
 -}
-  return ()
+  P.return ()
 
 --makeDoc :: [(String, String)] -> Document
 --makeDoc ls = P.map ((\(x,y) -> (P.read x :: Int, P.read (P.tail y) :: Int)) . 
