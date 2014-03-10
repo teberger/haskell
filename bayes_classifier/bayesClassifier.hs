@@ -52,7 +52,6 @@ main = do
       trainDocs = map makeDoc train_data_temp
       testDocs  = map makeDoc test_data_temp
       
-      --trainData = fromListVector (Z :. ())
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
       
