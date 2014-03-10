@@ -6,6 +6,7 @@ import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import qualified Data.ByteString as BS
+import Data.Char
 import Data.Array.Repa hiding ((++), map)
 import qualified Data.Vector.Unboxed as V
 import Data.List.Extras.Argmax
@@ -28,8 +29,8 @@ type WordCount = Int
 main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
-  vocabulary <- liftM (BS.splitWith (== '\n')) $ BS.hGetContents =<< openFile vocab ReadMode
-  labels_ln  <- liftM (BS.splitWith (== '\n')) $ BS.hGetContents =<< openFile labels ReadMode
+  vocabulary <- liftM (BS.splitWith (== (fromIntegral (ord '\n')))) $ BS.hGetContents =<< openFile vocab ReadMode
+  labels_ln  <- liftM (BS.splitWith (== (fromIntegral (ord '\n')))) $ BS.hGetContents =<< openFile labels ReadMode
   
   train_data_lines  <- BS.hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
 --  train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
