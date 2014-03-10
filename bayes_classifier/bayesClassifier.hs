@@ -66,7 +66,7 @@ main = do
   return ()
 
 makeDoc :: Int -> [(String, String)] -> Document
-makeDoc nVocab ls = fromFunction (Z :. nVocab) f 
+makeDoc nVocab ls = computeS $ fromFunction (Z :. nVocab) f 
   where f (Z :. i) = case lookup i ls' of 
                         Just x  -> x
                         Nothing -> 0
