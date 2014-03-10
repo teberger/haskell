@@ -28,8 +28,8 @@ type WordCount = Int
 main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
-  vocabulary <- BS.hGetContents =<< openFile vocab ReadMode
-  labels_ln  <- BS.hGetContents =<< openFile labels ReadMode
+  vocabulary <- liftM (BS.splitWith (== '\n')) $ BS.hGetContents =<< openFile vocab ReadMode
+  labels_ln  <- liftM (BS.splitWith (== '\n')) $ BS.hGetContents =<< openFile labels ReadMode
   
   train_data_lines  <- BS.hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
 --  train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
