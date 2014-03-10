@@ -65,11 +65,12 @@ main = do
   print $ length trainDocs
   return ()
 
-makeDoc :: [(String, String)] -> Document
-makeDoc ls = fromFunction (Z :. nVocab) f 
+makeDoc :: Int -> [(String, String)] -> Document
+makeDoc nVocab ls = fromFunction (Z :. nVocab) f 
   where f (Z :. i) = case lookup i ls' of 
                         Just x  -> x
                         Nothing -> 0
+                        
         ls' = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
                                 break (== ' ') . 
                                 tail .  --removes the leading ' '
