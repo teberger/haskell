@@ -64,7 +64,7 @@ main = do
   return ()
 
 makeDoc :: [(String, String)] -> Document
-makeDoc ls = fromListVector (Z :. (length ls)) $ map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
+makeDoc ls = fromListUnboxed (Z :. (length ls)) $ map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
                                                       break (== ' ') . 
                                                       tail .  --removes the leading ' '
                                                       snd)
