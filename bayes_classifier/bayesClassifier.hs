@@ -8,7 +8,7 @@ import Control.Monad (liftM)
 import Data.Array.Repa
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
-import qualified Prelude as P 
+
 
 --INSTANCE TYPE SYNONYM
 type Instance = (LabelIdx, Document)
@@ -26,8 +26,8 @@ type WordCount = Int
 main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
-  vocabulary <- fmap lines $ hGetContents P.(=<<) openFile vocab ReadMode
-  labels_ln  <- fmap lines $ hGetContents P.(=<<) openFile labels ReadMode
+  vocabulary <- fmap lines $ hGetContents =<< openFile vocab ReadMode
+  labels_ln  <- fmap lines $ hGetContents =<< openFile labels ReadMode
   
   train_data_lines  <- fmap lines $ hGetContents P.(=<<) openFile (dataLoc ++ "train.data" ) ReadMode 
 --  train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
