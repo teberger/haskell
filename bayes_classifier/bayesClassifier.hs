@@ -52,7 +52,7 @@ main = do
       trainDocs = map makeDoc train_data_temp 
       testDocs  = map makeDoc test_data_temp
       
---      wordLikelyhoods =  :: Array U (Z :. Int :. Int) Int
+--      wordLikelyhoods =  :: Array U (Z :. LabelIdx :. WordIndex) Double
 {-  
 
       
