@@ -20,6 +20,7 @@ type Word = String
 type WordIdx = Int
 type WordCount = Int
 
+
 main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
