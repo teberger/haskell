@@ -18,7 +18,7 @@ type Instance = (LabelIdx, Document)
 type Label = String
 type LabelIdx = Int
 --DOCUMENT TYPE SYNONYM
-type Document = [(WordIdx, WordCount)]
+type Document = Array U (Z :. Int) (WordIdx, WordCount)
 type DocumentNumber = Int
 --WORD TYPE SYNONYM
 type Word = String
@@ -44,6 +44,8 @@ main = do
       nVocab = size (extent vocab)  :: Int
       nLabel = size (extent labels) :: Int
       alpha  = 1 / (fromIntegral nVocab) :: Double
+      
+--      wordLikelyhoods =  :: Array U (Z :. Int :. Int) Int
 {-  
       f = (\x y -> (fst x) == (fst y))
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
@@ -52,7 +54,7 @@ main = do
       trainDocs = map makeDoc train_data_temp 
       testDocs  = map makeDoc test_data_temp
       
-      trainData = (m ap read train_label_lines) `zip` trainDocs :: [Instance]
+      trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
       initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
       initWordsAlphas = V.replicate (V.length vocab) (1 + alpha)
