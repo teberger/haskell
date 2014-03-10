@@ -12,7 +12,6 @@ import Data.Array.Repa.Repr.Vector
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
-
 --INSTANCE TYPE SYNONYM
 type Instance = (LabelIdx, Document)
 --LABEL TYPE SYNONYM
