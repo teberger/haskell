@@ -44,7 +44,6 @@ main = do
       nVocab = size (extent vocab)  :: Int
       nLabel = size (extent labels) :: Int
       alpha  = 1 / (fromIntegral nVocab) :: Double
-      
 {-  
       f = (\x y -> (fst x) == (fst y))
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
