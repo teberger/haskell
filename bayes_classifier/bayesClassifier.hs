@@ -3,7 +3,7 @@ module Main where
 import System.Environment
 import System.IO
 import Control.Monad (liftM)
-import qualified Data.Array.Repa as R
+import Data.Array.Repa
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
