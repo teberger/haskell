@@ -56,7 +56,7 @@ main = do
       trainData =  (map read train_label_lines) `zip` trainDocs :: [Instance]      
       testData  = (map read test_label_lines ) `zip` testDocs   :: [Instance]
       
-      zeros = fromFunction (Z :. nVocab) (\(Z :. wi) -> 0.0) :: Array D (Z :. WordIdx) Double
+      zeros = fromFunction (Z :. nVocab) (\(Z :. wi) -> 0) :: Array D (Z :. WordIdx) Int
       
       likelyhoods = [foldl' (+^) zeros (filter ((/= i) . fst) trainData) | i <- [0..nLabel]]
 --      likelyhoods is append after I sum across all indexes -> Array U (Z :. labelIdx) (Array U (Z :. WordIdx) Int)
