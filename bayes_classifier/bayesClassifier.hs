@@ -5,6 +5,7 @@ module Main where
 import System.Environment
 import System.IO
 import Control.Monad (liftM)
+import Data.List
 import Data.Array.Repa hiding ((++), map)
 import Data.Array.Repa.Repr.Vector
 import qualified Data.Vector as V
