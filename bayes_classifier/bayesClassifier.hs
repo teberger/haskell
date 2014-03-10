@@ -19,7 +19,7 @@ type Instance = (LabelIdx, Document)
 type Label = String
 type LabelIdx = Int
 --DOCUMENT TYPE SYNONYM
-type Document = Array U (Z :. Int) (WordIdx, WordCount)
+type Document = Array U (Z :. WordIdx) WordCount
 type DocumentNumber = Int
 --WORD TYPE SYNONYM
 type Word = String
