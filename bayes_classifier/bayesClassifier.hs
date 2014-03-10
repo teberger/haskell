@@ -65,14 +65,6 @@ main = do
   print $ length trainDocs
   return ()
 
-
---buildFull :: Int -> Array U (Z :. Int) (WordIdx, WordCount) -> Array U (Z :. WordIdx) WordCount
-buildFull nVocab counts = fromFunction (Z :. nVocab) f
-  where f (Z :. i) = if i < 
-                     then counts ! (Z :.  i)
-                     else 0
-  
-
 makeDoc :: [(String, String)] -> Document
 makeDoc ls = fromFunction (Z :. nVocab) f 
   where f (Z :. i) = case lookup i ls' of 
