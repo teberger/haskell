@@ -26,16 +26,16 @@ type WordCount = Int
 main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
-  vocabulary <- fmap lines $ hGetContents =<< openFile vocab ReadMode
-  labels_ln  <- fmap lines $ hGetContents =<< openFile labels ReadMode
+  vocabulary <- fmap lines $ hGetContents P.(=<<) openFile vocab ReadMode
+  labels_ln  <- fmap lines $ hGetContents P.(=<<) openFile labels ReadMode
   
-  train_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
-  train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
-  train_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.map"  ) ReadMode 
+  train_data_lines  <- fmap lines $ hGetContents P.(=<<) openFile (dataLoc ++ "train.data" ) ReadMode 
+--  train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
+--  train_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.map"  ) ReadMode 
   
-  test_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.data" ) ReadMode
-  test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
-  test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
+--  test_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.data" ) ReadMode
+--  test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
+--  test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
   let vocab  = fromListUnboxed (Z :. (P.length vocabulary :: Int)) vocabulary  :: Array U (Z :. Int) String
 {-      labels = R.fromList labels_ln       
