@@ -35,8 +35,8 @@ main = do
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
   let vocab  = R.fromList (R.Z R.:. (length vocabulary) :: Int) vocabulary
-      labels = R.fromListBoxed labels_ln                :: V.Vector Label
-      nVocab = fromIntegral (V.length vocab)
+      labels = R.fromList labels_ln       
+{-      nVocab = fromIntegral (V.length vocab)
       nLabel = fromIntegral (V.length labels)
       alpha  = 1 / nVocab
       
@@ -51,7 +51,7 @@ main = do
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
       initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
       initWordsAlphas = V.replicate (V.length vocab) (1 + alpha)
-
+-}
   print $ V.length vocab
   return ()
 
