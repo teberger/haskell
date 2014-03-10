@@ -13,6 +13,7 @@ import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
 --INSTANCE TYPE SYNONYM
+type Instances = Array U (Z :. LabelIdx) Document
 type Instance = (LabelIdx, Document)
 --LABEL TYPE SYNONYM
 type Label = String
