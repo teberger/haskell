@@ -6,7 +6,7 @@ import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import Data.Array.Repa hiding ((++))
-import qualified Data.Vector as V
+import qualified Data.Vector.Unboxed as V
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
