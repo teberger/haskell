@@ -56,9 +56,10 @@ main = do
       trainData =  (map read train_label_lines) `zip` trainDocs :: [Instance]      
       testData  = (map read test_label_lines ) `zip` testDocs   :: [Instance]
       
-      wordLikelyhoods = computeS $ fromFunction (Z :. nLabel :. nVocab) (\(Z :. li :. wi) -> 0.0) :: Array U (Z :. LabelIdx :. WordIdx) Double
+      zeros = computeS $ fromFunction (Z :. nVocab) (\(Z :. wi) -> 0) :: Array U (Z :. LabelIdx :. WordIdx) Int
       
---      likelyhoods = fromList (Z :. nLabel :. nVocab) $ 
+      likelyhoods = fromFunction (Z :. nLabel) (\(Z :. i) -> foldl' +^ zeros (filter ((/= i) . fst) trainData)) 
+--      likelyhoods is append after I sum across all indexes -> Array U (Z :. labelIdx) (Array U (Z :. WordIdx) Int)
       
       
 --TODO: Fold over the trainData and come up with the wordLikelyhood list
