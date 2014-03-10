@@ -59,17 +59,17 @@ main = do
 -}
   return ()
 
-makeDoc :: [(String, String)] -> Document
-makeDoc ls = P.map ((\(x,y) -> (P.read x :: Int, P.read (P.tail y) :: Int)) . 
-                  break (== ' ') . 
-                  P.tail .  --removes the leading ' '
-                  P.snd)
-             ls
+--makeDoc :: [(String, String)] -> Document
+--makeDoc ls = P.map ((\(x,y) -> (P.read x :: Int, P.read (P.tail y) :: Int)) . 
+--                  break (== ' ') . 
+--                  P.tail .  --removes the leading ' '
+--                  P.snd)
+--             ls
 
 --Renaming methods to make it easier to read
-getLabel = P.fst
-getDocument = P.snd
-getWordIdx = P.fst
-getWordCount = P.snd
+--getLabel = P.fst
+--getDocument = P.snd
+--getWordIdx = P.fst
+--getWordCount = P.snd
 
 
