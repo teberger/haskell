@@ -63,7 +63,7 @@ main = do
 -}
   return ()
 
-makeDoc :: [(String, String)] -> Document
+--makeDoc :: [(String, String)] -> 
 makeDoc ls = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
                   break (== ' ') . 
                   tail .  --removes the leading ' '
