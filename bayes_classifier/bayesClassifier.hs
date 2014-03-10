@@ -50,8 +50,8 @@ main = do
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
       test_data_temp  = groupBy f (map (break (== ' ')) test_data_lines )      
       
-      trainDocs = map makeDoc train_data_temp
-      testDocs  = map makeDoc test_data_temp
+      trainDocs = map (makeDoc nVocab) train_data_temp
+      testDocs  = map (makeDoc nVocab) test_data_temp
       
       trainData =  (map read train_label_lines) `zip` trainDocs :: [Instance]      
       testData  = (map read test_label_lines ) `zip` testDocs   :: [Instance]
