@@ -59,6 +59,7 @@ main = do
       wordLikelyhoods = computeS $ fromFunction (Z :. nLabel :. nVocab) (\(Z :. li :. wi) -> 0.0) :: Array U (Z :. LabelIdx :. WordIdx) Double
       
 --TODO: Fold over the trainData and come up with the wordLikelyhood list
+
   print $ length trainDocs
   return ()
 
