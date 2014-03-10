@@ -58,12 +58,7 @@ main = do
       
       wordLikelyhoods = computeS $ fromFunction (Z :. nLabel :. nVocab) (\(Z :. li :. wi) -> 0.0) :: Array U (Z :. LabelIdx :. WordIdx) Double
       
-{-  
-      initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
-      initWordsAlphas = V.replicate (V.length vocab) (1 + alpha)
-
-
--}
+--TODO: Fold over the trainData and come up with the wordLikelyhood list
   print $ length trainDocs
   return ()
 
@@ -77,5 +72,5 @@ makeDoc ls = fromListUnboxed (Z :. (length ls)) $ map ((\(x,y) -> (read x :: Int
 --Renaming methods to make it easier to read
 --getLabel = P.fst
 --getDocument = P.snd
---getWordIdx = P.fst
+--gOetWordIdx = P.fst
 --getWordCount = P.snd
