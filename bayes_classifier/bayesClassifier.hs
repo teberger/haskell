@@ -51,8 +51,9 @@ main = do
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
       initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
       initWordsAlphas = V.replicate (V.length vocab) (1 + alpha)
--}
+
   print $ V.length vocab
+-}
   return ()
 
 makeDoc :: [(String, String)] -> Document
