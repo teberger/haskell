@@ -5,7 +5,7 @@ module Main where
 import System.Environment
 import System.IO
 import Control.Monad (liftM)
-import Data.ByteString.Char8
+import qualified Data.ByteString.Char8 as BS
 import Data.Array.Repa hiding ((++))
 import qualified Data.Vector.Unboxed as V
 import Data.List.Extras.Argmax
@@ -39,7 +39,7 @@ main = do
 --  test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
 --  test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let v_vocab = V.fromList (pack vocabulary)
+  let v_vocab = V.fromList (BS.pack vocabulary)
       vocab = fromUnboxed (Z :. (V.length v_vocab :: Int)) v_vocab -- :: Array U (Z :. Int) 
 {-      labels = R.fromList labels_ln       
       nVocab = fromIntegral (V.length vocab)
