@@ -68,17 +68,21 @@ main = do
 
 --buildFull :: Int -> Array U (Z :. Int) (WordIdx, WordCount) -> Array U (Z :. WordIdx) WordCount
 buildFull nVocab counts = fromFunction (Z :. nVocab) f
-  where f (Z :. i) = if i < size (extend counts) 
+  where f (Z :. i) = if i < 
                      then counts ! (Z :.  i)
                      else 0
   
 
 makeDoc :: [(String, String)] -> Document
-makeDoc ls = fromListUnboxed (Z :. (length ls)) $ map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
-                                                       break (== ' ') . 
-                                                       tail .  --removes the leading ' '
-                                                       snd)
-                                                  ls
+makeDoc ls = fromFunction (Z :. nVocab) f 
+  where f (Z :. i) = case lookup i ls' of 
+                        Just x  -> x
+                        Nothing -> 0
+        ls' = map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
+                                break (== ' ') . 
+                                tail .  --removes the leading ' '
+                                snd)
+               ls
 
 --Renaming methods to make it easier to read
 --getLabel = P.fst
