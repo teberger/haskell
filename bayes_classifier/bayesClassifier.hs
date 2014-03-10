@@ -5,7 +5,7 @@ module Main where
 import System.Environment
 import System.IO
 import Control.Monad (liftM)
-import Data.Array.Repa
+import Data.Array.Repa hiding (++)
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
@@ -71,5 +71,3 @@ main = do
 --getDocument = P.snd
 --getWordIdx = P.fst
 --getWordCount = P.snd
-
-
