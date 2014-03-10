@@ -58,7 +58,7 @@ main = do
       
       zeros = fromFunction (Z :. nVocab) (\(Z :. wi) -> 0) :: Array D (Z :. WordIdx) Int
       
-      likelyhoods = [foldl' (\x y -> x +^ (snd y)) zeros (filter ((/= i) . fst) trainData) | i <- [0..nLabel]]
+      likelyhoods = foldl' R.++ mzero [foldl' (\x y -> x +^ (snd y)) zeros (filter ((/= i) . fst) trainData) | i <- [0..nLabel]]
 --      likelyhoods is append after I sum across all indexes -> Array U (Z :. labelIdx) (Array U (Z :. WordIdx) Int)
       
       
