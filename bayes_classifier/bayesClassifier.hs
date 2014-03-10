@@ -3,7 +3,7 @@ module Main where
 import System.Environment
 import System.IO
 import Control.Monad (liftM)
-import Data.Array.Repa
+import qualified Data.Array.Repa as R
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
@@ -34,7 +34,7 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let vocab  = fromList (Z :. (length vocabulary) :: Int) vocabulary :: R.Array
+  let vocab  = R.fromList (R.(Z) R.(:.) (length vocabulary) :: Int) vocabulary
       labels = R.fromListBoxed labels_ln                :: V.Vector Label
       nVocab = fromIntegral (V.length vocab)
       nLabel = fromIntegral (V.length labels)
