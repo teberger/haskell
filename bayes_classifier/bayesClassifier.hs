@@ -37,7 +37,7 @@ main = do
 --  test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
 --  test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let vocab  = fromListUnboxed (Z :. (P.length vocabulary :: Int)) vocabulary  :: Array U (Z :. Int) P.String
+  let vocab  = fromListUnboxed (Z :. (length vocabulary :: Int)) vocabulary  :: Array U (Z :. Int) String
 {-      labels = R.fromList labels_ln       
       nVocab = fromIntegral (V.length vocab)
       nLabel = fromIntegral (V.length labels)
@@ -57,7 +57,7 @@ main = do
 
   print $ V.length vocab
 -}
-  P.return P.()
+  return ()
 
 --makeDoc :: [(String, String)] -> Document
 --makeDoc ls = P.map ((\(x,y) -> (P.read x :: Int, P.read (P.tail y) :: Int)) . 
