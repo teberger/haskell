@@ -6,9 +6,9 @@ import System.Environment
 import System.IO
 import Control.Monad (liftM)
 import Data.List
-import Data.Array.Repa hiding ((++), map)
+import Data.Array.Repa hiding ((++), map, zipWith)
 import Data.Array.Repa.Eval (fromList)
-import qualified Data.Array.Repa as R ((++), map)
+import qualified Data.Array.Repa as R ((++), map, zipWith)
 import Data.Array.Repa.Repr.Vector
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
@@ -66,8 +66,12 @@ main = do
   return ()
 
 
-buildFull :: Array U (Z :. Int) (WordIdx, WordCount) -> Array U (Z :. WordIdx) WordCount
-buildFull = undefined
+--buildFull :: Int -> Array U (Z :. Int) (WordIdx, WordCount) -> Array U (Z :. WordIdx) WordCount
+buildFull nVocab counts = fromFunction (Z :. nVocab) f
+  where f (Z :. i) = if i < size (extend counts) 
+                     then counts ! (Z :.  i)
+                     else 0
+  
 
 makeDoc :: [(String, String)] -> Document
 makeDoc ls = fromListUnboxed (Z :. (length ls)) $ map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
