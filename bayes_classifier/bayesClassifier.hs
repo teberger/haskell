@@ -1,14 +1,13 @@
-{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE TypeOperators, ScopedTypeVariables #-}
 
 module Main where
 
 import System.Environment
 import System.IO
 import Control.Monad (liftM)
-import qualified Data.ByteString as BS
-import Data.Char
 import Data.Array.Repa hiding ((++), map)
-import qualified Data.Vector.Unboxed as V
+import Data.Array.Repa.Repr.Vector
+import qualified Data.Vector as V
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
@@ -29,24 +28,24 @@ type WordCount = Int
 main :: IO ()
 main = do
   vocab:labels:dataLoc:_ <- getArgs
-  vocabulary <- liftM (BS.splitWith (== (fromIntegral (ord '\n')))) $ BS.hGetContents =<< openFile vocab ReadMode
-  labels_ln  <- liftM (BS.splitWith (== (fromIntegral (ord '\n')))) $ BS.hGetContents =<< openFile labels ReadMode
+  vocabulary <- liftM lines $ hGetContents =<< openFile vocab ReadMode
+  labels_ln  <- liftM lines $ hGetContents =<< openFile labels ReadMode
   
-  train_data_lines  <- BS.hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
---  train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
---  train_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.map"  ) ReadMode 
+  train_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
+  train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
+  train_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.map"  ) ReadMode 
   
---  test_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.data" ) ReadMode
---  test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
---  test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
+  test_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.data" ) ReadMode
+  test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
+  test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let v_vocab = V.fromList vocabulary
-      vocab = fromUnboxed (Z :. (V.length v_vocab :: Int)) v_vocab -- :: Array U (Z :. Int) 
-{-      labels = R.fromList labels_ln       
-      nVocab = fromIntegral (V.length vocab)
-      nLabel = fromIntegral (V.length labels)
-      alpha  = 1 / nVocab
+  let vocab = fromListVector (Z :. (length vocabulary :: Int)) vocabulary :: Array V (Z :. Int) String
+      labels = fromListVector (Z :. (length labels_ln :: Int)) labels_ln :: Array V (Z :. Int) String
+      nVocab = size (extent vocab)  :: Int
+      nLabel = size (extent labels) :: Int
+      alpha  = 1 / (fromIntegral nVocab) :: Double
       
+{-  
       f = (\x y -> (fst x) == (fst y))
       train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
       test_data_temp  = groupBy f (map (break (== ' ')) test_data_lines )
