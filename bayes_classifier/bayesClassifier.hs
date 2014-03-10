@@ -7,7 +7,7 @@ import System.IO
 import Control.Monad (liftM)
 import Data.List
 import Data.Array.Repa hiding ((++), map)
-import qualified Data.Array.Repa ((++), map)) as R
+import qualified Data.Array.Repa ((++), map) as R
 import Data.Array.Repa.Repr.Vector
 import qualified Data.Vector as V
 import Data.List.Extras.Argmax
