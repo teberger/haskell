@@ -7,13 +7,13 @@ import System.IO
 import Control.Monad (liftM)
 import Data.List
 import Data.Array.Repa hiding ((++), map)
+import Data.Array.Repa.Eval (fromList)
 import qualified Data.Array.Repa as R ((++), map)
 import Data.Array.Repa.Repr.Vector
 import Data.List.Extras.Argmax
 import GSL.Random.Dist
 
 --INSTANCE TYPE SYNONYM
-type Instances = Array U (Z :. LabelIdx) Document
 type Instance = (LabelIdx, Document)
 --LABEL TYPE SYNONYM
 type Label = String
@@ -58,9 +58,16 @@ main = do
       
       wordLikelyhoods = computeS $ fromFunction (Z :. nLabel :. nVocab) (\(Z :. li :. wi) -> 0.0) :: Array U (Z :. LabelIdx :. WordIdx) Double
       
+      likelyhoods = fromList (Z :. nLabel :. nVocab) $ 
+      
+      
 --TODO: Fold over the trainData and come up with the wordLikelyhood list
   print $ length trainDocs
   return ()
+
+
+buildFull :: Array U (Z :. Int) (WordIdx, WordCount) -> Array U (Z :. WordIdx) WordCount
+buildFull = undefined
 
 makeDoc :: [(String, String)] -> Document
 makeDoc ls = fromListUnboxed (Z :. (length ls)) $ map ((\(x,y) -> (read x :: Int, read (tail y) :: Int)) . 
