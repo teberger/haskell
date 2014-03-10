@@ -29,7 +29,7 @@ main = do
   vocabulary <- fmap lines $ hGetContents =<< openFile vocab ReadMode
   labels_ln  <- fmap lines $ hGetContents =<< openFile labels ReadMode
   
-  train_data_lines  <- fmap lines $ hGetContents P.(=<<) openFile (dataLoc ++ "train.data" ) ReadMode 
+  train_data_lines  <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.data" ) ReadMode 
 --  train_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.label") ReadMode 
 --  train_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "train.map"  ) ReadMode 
   
