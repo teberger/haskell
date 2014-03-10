@@ -54,7 +54,7 @@ main = do
       
       --trainData = fromListVector (Z :. ())
       
-  wordLikelyhoods <- computeP $ fromFunction (Z :. nLabel :. nVocab) (\(Z :. li :. wi) -> 0.0) -- :: Array U (Z :. LabelIdx :. WordIdx) Double
+  wordLikelyhoods <- computeP $ fromFunction (Z :. nLabel :. nVocab) (\(Z :. li :. wi) -> 0.0 :: Double) -- :: Array U (Z :. LabelIdx :. WordIdx) Double
 {-  
       trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
       testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
