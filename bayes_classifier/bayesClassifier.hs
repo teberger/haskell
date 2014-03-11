@@ -36,7 +36,7 @@ main = do
   test_label_lines <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.label") ReadMode
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
-  let vocab  != V.fromList vocabulary               :: V.Vector Word
+  let vocab  =! V.fromList vocabulary               :: V.Vector Word
       labels = V.fromList labels_ln                :: V.Vector Label
       nVocab = fromIntegral (V.length vocab)
       nLabel = fromIntegral (V.length labels)
