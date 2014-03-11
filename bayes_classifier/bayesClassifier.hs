@@ -62,8 +62,8 @@ main = do
       sums = fromListVector (Z :. nLabel) $ map sumAllS likelyhoods
       
       [trainData'] = computeP $ traverse likelyhoods' (\(Z :. i :. j) -> (Z :. i :. j))
-                                                      (\lp (Z :. i :. j) -> (fromIntegral (lp (Z :. i :. j))) / 
-                                                                             (sums ! (Z :. i)))
+                                                      (\lp (Z :. i :. j) -> ((lp (Z :. i :. j))) / 
+                                                                             fromIntegral (sums ! (Z :. i)))
 
 --      likelyhoods is append after I sum across all indexes -> Array U (Z :. labelIdx) (Array U (Z :. WordIdx) Int)
       
