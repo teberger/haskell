@@ -57,7 +57,7 @@ main = do
       testData  = (map read test_label_lines ) `zip` testDocs   :: [Instance]
       
       zeros = fromFunction (Z :. nVocab) (\(Z :. wi) -> 0) :: Array D (Z :. WordIdx) Int
-      likelyhoods = [foldl' (\x y -> x +^ (snd y)) zeros (filter ((/= i) . fst) trainData) | i <- [0..nLabel]]
+      likelyhoods = [foldl' (\x y -> x +^ (snd y)) zeros (filter ((/= i) . fst) trainData) | i <- [0..(nLabel-1)]]
       likelyhoods' = reshape (Z :. nLabel :. nVocab) $ foldl' (R.++) (head likelyhoods) (tail likelyhoods)
       sums = fromListVector (Z :. nLabel) $ map sumAllS likelyhoods
       
@@ -69,7 +69,7 @@ main = do
       
       
 --TODO: Fold over the trainData and come up with the wordLikelyhood list
-  print $ nLabel
+  print $ 
   return ()
 
 makeDoc :: Int -> [(String, String)] -> Document
