@@ -69,7 +69,7 @@ main = do
       
       
 --TODO: Fold over the trainData and come up with the wordLikelyhood list
-  print $ length likelyhoods
+  print $ nLabel
   return ()
 
 makeDoc :: Int -> [(String, String)] -> Document
