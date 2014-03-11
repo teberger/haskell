@@ -57,9 +57,12 @@ main = do
       testData  = (map read test_label_lines ) `zip` testDocs   :: [Instance]
       
       zeros = fromFunction (Z :. nVocab) (\(Z :. wi) -> 0) :: Array D (Z :. WordIdx) Int
-      likelyhoods = [foldl' (\x y -> x +^ (snd y)) zeros (filter ((/= i) . fst) trainData) | i <- [0..nLabel]]       
+      likelyhoods = [foldl' (\x y -> x +^ (snd y)) zeros (filter ((/= i) . fst) trainData) | i <- [0..nLabel]]
+      likelyhoods' = foldl' (R.++) (head likelyhoods) (tail likelyhoods)
       sums = map sumAllS likelyhoods
-     
+      
+      trainData = traverse sums (\(Z :. i) -> (Z :. i))
+                                (\
 
 --      likelyhoods is append after I sum across all indexes -> Array U (Z :. labelIdx) (Array U (Z :. WordIdx) Int)
       
