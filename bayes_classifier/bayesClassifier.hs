@@ -59,7 +59,7 @@ main = do
       zeros = fromFunction (Z :. nVocab) (\(Z :. wi) -> 0) :: Array D (Z :. WordIdx) Int
       likelyhoods = [foldl' (\x y -> x +^ (snd y)) zeros (filter ((/= i) . fst) trainData) | i <- [0..nLabel]]
       likelyhoods' = reshape (Z :. nLabel :. nVocab) $ foldl' (R.++) (head likelyhoods) (tail likelyhoods)
-      sums = fromList (Z :. nLabel) $ map sumAllS likelyhoods
+      sums = fromListVector (Z :. nLabel) $ map sumAllS likelyhoods
       
       trainData' = traverse likelyhoods' (\(Z :. i :. j) -> (Z :. i :. j))
                                 (\lp (Z :. i :. j) -> (lp (Z :. i :. j)) / fromIntegral (sums ! i))
