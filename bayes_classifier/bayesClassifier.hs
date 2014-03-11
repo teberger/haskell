@@ -61,7 +61,7 @@ main = do
       likelyhoods' = reshape (Z :. nLabel :. nVocab) $ foldl' (R.++) (head likelyhoods) (tail likelyhoods)
       sums = fromListVector (Z :. nLabel) $ map sumAllS likelyhoods
       
-      trainData' = traverse likelyhoods' (\(Z :. i :. j) -> (Z :. i :. j))
+      [trainData'] = computeP $ traverse likelyhoods' (\(Z :. i :. j) -> (Z :. i :. j))
                                          (\lp (Z :. i :. j) -> (fromIntegral (lp (Z :. i :. j))) / 
                                                                 fromIntegral (sums ! (Z :. i)))
 
