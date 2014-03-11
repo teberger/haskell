@@ -68,7 +68,7 @@ main = do
       
       
 --TODO: Fold over the trainData and come up with the wordLikelyhood list
-  print $ length trainDocs
+  print $ trainData' ! (Z :. 1 :. 1)
   return ()
 
 makeDoc :: Int -> [(String, String)] -> Document
