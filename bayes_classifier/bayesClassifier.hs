@@ -37,22 +37,22 @@ main = do
   test_map_lines   <- fmap lines $ hGetContents =<< openFile (dataLoc ++ "test.map"  ) ReadMode
   
   let !vocab  = V.fromList vocabulary               :: V.Vector Word
-      labels = V.fromList labels_ln                :: V.Vector Label
-      nVocab = fromIntegral (V.length vocab)
-      nLabel = fromIntegral (V.length labels)
-      alpha  = 1 / nVocab
+      !labels = V.fromList labels_ln                :: V.Vector Label
+      !nVocab = fromIntegral (V.length vocab)
+      !nLabel = fromIntegral (V.length labels)
+      1alpha  = 1 / nVocab
       
       f = (\x y -> (fst x) == (fst y))
-      train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
-      test_data_temp  = groupBy f (map (break (== ' ')) test_data_lines )
+      !train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
+      !test_data_temp  = groupBy f (map (break (== ' ')) test_data_lines )
       
-      trainDocs = map makeDoc train_data_temp 
-      testDocs  = map makeDoc test_data_temp
+      !trainDocs = map makeDoc train_data_temp 
+      !testDocs  = map makeDoc test_data_temp
       
-      trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
-      testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
-      initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
-      initWordsAlphas = V.replicate (V.length vocab) (1 + alpha)
+      !trainData = (map read train_label_lines) `zip` trainDocs :: [Instance]
+      !testData  = (map read test_label_lines ) `zip` testDocs  :: [Instance]
+      !initClassDist = V.replicate (V.length labels) (1.0 / nLabel)
+      !initWordsAlphas = V.replicate (V.length vocab) (1 + alpha)
       
   print $ V.length vocab
   return ()
