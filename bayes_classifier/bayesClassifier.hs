@@ -40,7 +40,7 @@ main = do
       !labels = V.fromList labels_ln                :: V.Vector Label
       !nVocab = fromIntegral (V.length vocab)
       !nLabel = fromIntegral (V.length labels)
-      1alpha  = 1 / nVocab
+      !alpha  = 1 / nVocab
       
       f = (\x y -> (fst x) == (fst y))
       !train_data_temp = groupBy f (map (break (== ' ')) train_data_lines)
