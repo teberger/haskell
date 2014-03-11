@@ -4,7 +4,7 @@ clean:
 	rm *.hi *.o *~ classifier
 
 compile: 
-	ghc --make bayesClassifier.hs -o classifier -02
+	ghc --make bayesClassifier.hs -o classifier -O2
 
 run: compile
 	./classifier vocabulary.txt newsgrouplabels.txt data/ -N
