@@ -6,6 +6,6 @@ square :: Int -> (Int -> a) -> a
 square x foo = foo (((*) x) x)
 
 fib :: Int -> (Int -> a) -> a
-fib x foo = foo (if (x < 2) 
-                 then x 
-                 else (fib (x-1)) + (fib (x-2)))
+fib x foo = if (x < 2) 
+            then x 
+            else (fib (x-1)) + (fib (x-2))
