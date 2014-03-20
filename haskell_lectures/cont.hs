@@ -2,8 +2,8 @@ module Main where
 
 import Control.Monad.Trans.Cont
 
-square :: Int -> Int
-square x foo = foo ((*) x) x
+square :: Int -> a -> Int
+square x foo = foo (((*) x) x)
 
 fib :: Int -> Int
 fib x = if (x < 2) 
