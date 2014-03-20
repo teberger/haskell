@@ -2,7 +2,7 @@ module Main where
 
 import Control.Monad.Trans.Cont
 
-square :: Int -> (a -> Int) -> Int
+square :: Int -> (Int -> a) -> a
 square x foo = foo (((*) x) x)
 
 fib :: Int -> Int
