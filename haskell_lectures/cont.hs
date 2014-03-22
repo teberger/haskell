@@ -21,13 +21,11 @@ add1_cps x = \f -> f (x + 1)
 add1_cps' :: ((Int -> Int) -> a) -> a
 add1_cps' = \f -> f $ \x -> (x + 1)
 
-
 add x y = x + y
-
 add' x = \y -> x + y
-
 add'' = \x y -> x + y
- 
+add''' = \f -> (\x y -> f x y) $ (+)
+
 op = \operator -> (\x -> (\y -> \context -> context $ operator x y))
 
 --add_cont :: Int -> Int -> ((Int -> a) -> a)
