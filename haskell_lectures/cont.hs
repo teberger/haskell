@@ -28,7 +28,9 @@ add''' = (\f -> (\x y -> f x y)) (+)
 
 op = \operator -> (\x -> (\y -> operator x y))
 
-op' = \operator -> (\x -> (\y -> \context -> context $ operator x y))
+op' = \operator -> $ \x -> 
+                   $ \y -> 
+                   $ \context -> context $ operator x y
 
 add_cont = op' (+)
 mult_cont = op' (*)
