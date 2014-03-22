@@ -22,7 +22,7 @@ add1_cps' :: ((Int -> Int) -> a) -> a
 add1_cps' = \f -> f $ \x -> (x + 1)
 
 --add_cont :: Int -> Int -> ((Int -> a) -> a)
-add_cont = \f0 -> f0 $ \f -> (\x y -> (f x y))
+add_cont = \fplus -> (\x1 ->  (\y -> (\sShow -> sShow (f x y))))
 
 fib :: Int -> Int
 fib 1 = 1
