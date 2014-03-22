@@ -6,6 +6,9 @@ import Control.Applicative
 -- Continuation is typed as (a -> r) -> r
 -- Cont a r
 
+add_1 :: Int -> Int
+add_1 x = x + 1
+
 add_cont :: Int -> Int -> ((Int -> a) -> a)
 add_cont x y = \f -> f (x + y)
 
