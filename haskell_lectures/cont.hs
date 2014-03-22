@@ -3,5 +3,5 @@ module Main where
 import Control.Monad.Trans.Cont
 import Control.Applicative
 
-square :: Int -> ((a -> Int) -> Int)
+square :: Int -> ((Int -> a) -> a)
 square x = (div x) . (\y -> y x)
