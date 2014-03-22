@@ -4,4 +4,4 @@ import Control.Monad.Trans.Cont
 import Control.Applicative
 
 square :: Int -> Int
-square x = multiply x x
+square x = div x x
