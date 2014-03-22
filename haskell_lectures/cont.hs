@@ -7,3 +7,4 @@ import Control.Applicative
 -- Cont a r
 
 add :: Int -> Int -> Cont a Int
+add = undefined
