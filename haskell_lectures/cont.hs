@@ -35,7 +35,7 @@ mult_cont = op' (*)
 
 fib 1 c = c 1
 fib 2 c = c 1
-fib x c = fib (x-1) $ \x -> 
-          fib (x-2) $ \y ->
+fib x c = fib (n-1) $ \x -> 
+          fib (n-2) $ \y ->
           c (x + y)
 
