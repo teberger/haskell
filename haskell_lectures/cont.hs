@@ -32,6 +32,8 @@ op' = \operator -> (\x ->
                    (\y -> 
                    (\context -> context $ operator x y)))
 
+;;op' x y operator = \c -> c $ operator x y
+
 add_cont = op' (+)
 mult_cont = op' (*)
 
