@@ -33,7 +33,6 @@ op' = \operator -> (\x -> (\y -> \context -> context $ operator x y))
 add_cont = op' (+)
 mult_cont = op' (*)
 
-fib :: Int -> Int
-fib 1 = 1
-fib 2 = 1
-fib x = fib (x-1) + fib (x-2)
+fib c 1 = c 1
+fib c 2 = c 1
+fib c x = fib (x-1) + fib (x-2)
