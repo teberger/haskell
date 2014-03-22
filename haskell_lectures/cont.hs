@@ -9,6 +9,9 @@ import Control.Applicative
 add_1 :: Int -> Int
 add_1 x = x + 1
 
+add_1' :: Int -> ((Int -> a) -> a)
+add_1' = \f -> f (x + 1)
+
 add_cont :: Int -> Int -> ((Int -> a) -> a)
 add_cont x y = \f -> f (x + y)
 
