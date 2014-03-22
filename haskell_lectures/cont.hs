@@ -35,4 +35,4 @@ mult_cont = op' (*)
 
 fib c 1 = c 1
 fib c 2 = c 1
-fib c x = c $ fib (x-1) + fib (x-2)
+fib c x = fib c (x-1) + fib c (x-2)
