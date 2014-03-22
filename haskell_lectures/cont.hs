@@ -3,5 +3,5 @@ module Main where
 import Control.Monad.Trans.Cont
 import Control.Applicative
 
-square :: Int 
+square :: Int  -> Int
 square = \x -> (*) x x --(\x1 -> x1 x x)
