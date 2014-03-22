@@ -6,5 +6,5 @@ import Control.Applicative
 -- Continuation is typed as (a -> r) -> r
 -- Cont a r
 
-add :: Int -> Int -> Cont a Int
-add x y = return (add x y)
+add_cont :: Int -> Int -> Cont a Int
+add_cont x y = return (add x y)
