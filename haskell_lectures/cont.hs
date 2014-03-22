@@ -7,4 +7,4 @@ import Control.Applicative
 -- Cont a r
 
 add_cont :: Int -> Int -> Cont a Int
-add_cont x y = return (add x y)
+add_cont x y = return (x + y)
