@@ -23,7 +23,7 @@ add1_cps' = \f -> f $ \x -> (x + 1)
 
 add x y = x + y
 add' x = \y -> x + y
-add'' = \x y -> x + y
+add'' = \x -> \y -> x + y
 add''' = (\f -> (\x y -> f x y)) (+)
 
 op = \operator -> (\x -> (\y -> operator x y))
