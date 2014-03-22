@@ -4,4 +4,4 @@ import Control.Monad.Trans.Cont
 import Control.Applicative
 
 square :: ((Int -> Int) -> Int) -> ((Int -> Int) -> Int)
-square = div . (\f -> f)  . (\y -> y)
+square = \f y -> div f y
