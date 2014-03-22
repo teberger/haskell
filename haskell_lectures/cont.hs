@@ -27,11 +27,11 @@ add x y = x + y
 add' x = \y -> x + y
 
 add'' = \x y -> x + y
-
-add''' = \plus -> (\x -> (\y -> plus x y))
+ 
+op = \operator -> (\x -> (\y -> operator x y))
 
 --add_cont :: Int -> Int -> ((Int -> a) -> a)
-add_cont = \fplus -> (\x ->  (\y -> (\sShow -> sShow (fplus x y))))
+add_cont = \fplus -> (\x y -> (\sShow -> sShow (fplus x y)))
 
 fib :: Int -> Int
 fib 1 = 1
