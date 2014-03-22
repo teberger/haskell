@@ -4,4 +4,4 @@ import Control.Monad.Trans.Cont
 import Control.Applicative
 
 square :: Int -> Int
-square x = add x x
+square x = mult x x
