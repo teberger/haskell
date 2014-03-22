@@ -56,4 +56,4 @@ fib' n = do
   
   
 fib'' :: Cont (Int -> (Int -> r )) r
-fib'' = callCC $ \n k -> k n
+fib'' = callCC $ \n -> \k -> k n
