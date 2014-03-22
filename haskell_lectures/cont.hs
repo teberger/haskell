@@ -34,7 +34,7 @@ add_cont = op' (+)
 mult_cont = op' (*)
 
 --fib ??
-fib :: Int -> (Int -> a) -> a
+--fib :: Int -> (Int -> a) -> a
 
 fib 1 c = c 1
 fib 2 c = c 1
