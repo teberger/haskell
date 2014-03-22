@@ -53,3 +53,7 @@ fib' n = do
   x <- fib (n-1)
   y <- fib (n-2)
   return (x + y)
+  
+  
+fib'' :: Cont (Int -> (Int -> r )) r
+fib'' = callCC $ \n k -> k n
