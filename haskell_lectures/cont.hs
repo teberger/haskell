@@ -2,5 +2,5 @@ module Main where
 
 import Control.Monad.Trans.Cont
 
-square :: Int -> Int -> Int
+square :: Int -> Int
 square x = (*) x x
