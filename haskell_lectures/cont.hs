@@ -41,3 +41,10 @@ fib 1 = \c -> c 1
 fib n = \c -> fib (n-1) $ \x -> -- <== look familiar? 
               fib (n-2) $ \y -> -- <== 
               c (x + y)
+
+fib' 0 = return 0 
+fib' 1 = return 1
+fib' n = do
+  x <- fib (n-1)
+  y <- fib (n-2)
+  return (x + y)
