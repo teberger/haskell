@@ -56,4 +56,4 @@ fib' n = do
   
   
 fib'' :: Cont (Int -> (Int -> r )) r
-fib'' = cont $ \n -> \k -> k n
+fib'' = cont $ \n k -> k n
