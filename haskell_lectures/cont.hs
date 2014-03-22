@@ -36,7 +36,7 @@ mult_cont = op' (*)
 --fib ??
 --fib :: Int -> (Int -> a) -> a
 
-fib 1 c = c 1
+fib 1 c = c 0
 fib 2 c = c 1
 fib n c = fib (n-1) $ \x -> -- <== look familiar? 
           fib (n-2) $ \y -> -- <== 
