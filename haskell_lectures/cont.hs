@@ -18,6 +18,8 @@ add_1 x = x + 1
 add1_cps :: Int -> ((Int -> a) -> a)
 add1_cps x = \f -> f (x + 1)
 
+add1_cps' :: ((Int -> Int) -> a) -> a
+
 add_cont :: Int -> Int -> ((Int -> a) -> a)
 add_cont x y = \f -> f (x + y)
 
