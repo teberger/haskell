@@ -3,4 +3,4 @@ module Main where
 import Control.Monad.Trans.Cont
 
 square :: Int -> (Int -> Int)
-square = (*) $ \x -> x 
+square = (*) $ \x1 x2 -> x1 x2 
