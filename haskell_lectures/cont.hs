@@ -21,6 +21,12 @@ add1_cps x = \f -> f (x + 1)
 add1_cps' :: ((Int -> Int) -> a) -> a
 add1_cps' = \f -> f $ \x -> (x + 1)
 
+
+add x y = x + y
+
+add' x = \y -> x + y
+
+
 --add_cont :: Int -> Int -> ((Int -> a) -> a)
 add_cont = \fplus -> (\x ->  (\y -> (\sShow -> sShow (fplus x y))))
 
