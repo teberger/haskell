@@ -6,6 +6,12 @@ import Control.Applicative
 -- Continuation is typed as (a -> r) -> r
 -- Cont a r
 
+one :: Int
+one = 1
+
+one_cps :: (Int -> a) -> a
+one_cps = \f -> f 1
+
 add_1 :: Int -> Int
 add_1 x = x + 1
 
