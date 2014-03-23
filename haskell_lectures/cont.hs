@@ -14,7 +14,7 @@ one_cps :: (Int -> a) -> a
 one_cps = \f -> f 1
 
 -- :t cont
---    = (a -> r) -> r
+--    = ((a -> r) -> r) -> Cont r a 
 
 one_cps' :: Cont a Int
 one_cps' = cont (\c -> c 1)
@@ -104,7 +104,7 @@ realRoot n = callCC $ \k -> do
 
 
 ex8 = do
-  a <- cont (\c -> [1,2] >>= c)
+  a <- cont (\c -> [c 1, c 2])
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
