@@ -102,4 +102,4 @@ ex8 = do
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
-test8 = runCont ex8 
+test8 = runCont ex8 show
