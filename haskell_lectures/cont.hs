@@ -18,13 +18,9 @@ add_1 x = x + 1
 add1_cps :: Int -> ((Int -> a) -> a)
 add1_cps x = \f -> f (x + 1)
 
-add1_cps' :: ((Int -> Int) -> a) -> a
-add1_cps' = \f -> f $ \x -> (x + 1)
-
 add x y = x + y
 add' x = \y -> x + y
 add'' = \x -> \y -> x + y
-add''' = (\f -> (\x y -> f x y)) (+)
 
 op = \operator -> (\x -> (\y -> operator x y))
 
@@ -58,13 +54,14 @@ fact''' n = do
   x <- fact'' (n-1)
   return (x * n)
   
-
+--now what about fib?
 fib 0 = \c -> c 0 
 fib 1 = \c -> c 1
 fib n = \c -> fib (n-1) $ \x -> 
               fib (n-2) $ \y -> 
               c (x + y)
 
+-- in monadic form?
 fib' :: (Num r) => Int -> (Int -> r) -> r
 fib' 0 = return 0 
 fib' 1 = return 1
@@ -73,6 +70,10 @@ fib' n = do
   y <- fib (n-2)
   return (x + y)
 
+-- this shows that continuation functions are monadic in nature
+-- however, this is kind of a disappointment, because we hid the continuation
+-- functions with the monadic style of code. Where did (\c -> c ...) go?
+  
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
   return (n' - 4)
@@ -83,3 +84,4 @@ fib'' n = callCC $ \k -> do
   x1 <- fib'' (n-1)
   x2 <- fib'' (n-2)
   k (x1 + x2)
+
