@@ -60,6 +60,5 @@ fib' n = do
 
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
-  k n
-  k n
+  x' <- k n
   return (n' - 4)
