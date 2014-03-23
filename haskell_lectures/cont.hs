@@ -91,5 +91,6 @@ fib'' n = callCC $ \k -> do
 -- k is our continuation function. It acts as a return from
 -- the continuation monad.
 realRoot n = callCC $ \k -> do
-  when (n < 0) $ k "Error. N is < 0 and does not have a real square root"
-  return (show $ sqrt n)
+  when (n < 0) $ k "n cannot be less than 0. It does not have a real root"
+  k (show $ sqrt n)
+
