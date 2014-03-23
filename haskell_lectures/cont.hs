@@ -57,3 +57,8 @@ fib' n = do
   
 --fib'' :: Cont (Int -> (Int -> r )) r
 --fib'' = cont $ \n k -> k n
+
+foo n = callCC $ \k -> do
+  let n' = n ^ 2 + 3
+  k n
+  return (n' - 4)
