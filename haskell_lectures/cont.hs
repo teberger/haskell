@@ -92,5 +92,5 @@ fib'' n = callCC $ \k -> do
 -- the continuation monad.
 realRoot n = callCC $ \k -> do
   when (n < 0) $ k "n cannot be less than 0. It does not have a real root"
-  k (show $ sqrt n)
+  return (show $ sqrt n)
 
