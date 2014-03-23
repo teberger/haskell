@@ -79,7 +79,7 @@ fib' n = do
 -- k is a unit function  
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
-  () <- k n
+--  k n
   return (n' - 4)
   
 fib'' 0 = callCC $ \k -> k 0
