@@ -60,3 +60,12 @@ fib' n = do
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
   return (n' - 4)
+  
+fib'' 0 = callCC $ \k -> k 0
+fib'' 1 = callCC $ \k -> k 1
+fib'' n = callCC $ \k -> do
+  x1 <- fib'' (n-1)
+  x2 <- fib'' (n-2)
+  k (x1 + x2)
+  
+      
