@@ -54,6 +54,7 @@ fact''' n = do
 --now what about fib?
 --fib :: Int -> (Int -> a) -> a
 
+--lambda style
 fib 0 = \c -> c 0 
 fib 1 = \c -> c 1
 fib n = \c -> fib (n-1) $ \x -> 
@@ -69,8 +70,8 @@ fib' n = do
   y <- fib (n-2)
   return (x + y)
 
--- this shows that continuation functions are monadic in nature
--- however, this is kind of a disappointment, because we hid the continuation
+-- so, continuation functions are monadic in nature however, this is 
+-- kind of a disappointment, because we hid the continuation
 -- functions with the monadic style of code. Where did (\c -> c ...) go?
   
 foo n = callCC $ \k -> do
