@@ -32,9 +32,6 @@ op' = \operator -> (\x ->
 add_cont = op' (+)
 mult_cont = op' (*)
 
---fib ??
---fib :: Int -> (Int -> a) -> a
-
 --fact ??
 fact :: Int -> Int
 fact 0 = 1
@@ -55,6 +52,8 @@ fact''' n = do
   return (x * n)
   
 --now what about fib?
+--fib :: Int -> (Int -> a) -> a
+
 fib 0 = \c -> c 0 
 fib 1 = \c -> c 1
 fib n = \c -> fib (n-1) $ \x -> 
