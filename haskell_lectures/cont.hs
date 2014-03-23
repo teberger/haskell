@@ -49,13 +49,15 @@ fact n = n * fact (n-1)
 fact' 0 = \c -> c 1
 fact' n = \c -> fact' (n-1) $ \x -> c (x * n) -- <=== look familiar? 
 
+-- :t return
+
 fact'' 0 = return 1
 fact'' n = do
   x <- fact'' (n-1)
   return (x * n)
   
 fact''' 0 = return 1  
-fact''' n = return . ((*) n) =<< fact (n-1)
+fact''' n = return . ((*) n) =<< fact''' (n-1)
 
 fib 0 = \c -> c 0 
 fib 1 = \c -> c 1
