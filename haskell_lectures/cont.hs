@@ -95,3 +95,11 @@ realRoot n = callCC $ \k -> do
   when (n < 0) $ k "n cannot be less than 0. It does not have a real root"
   k (show $ sqrt n)
   return "error"
+
+
+ex8 = do
+  a <- return 1
+  b <- cont (\fred -> [10,20] >>= fred)
+  return $ a+b
+
+--test8 = runCont ex8 return
