@@ -46,7 +46,7 @@ fact 0 = 1
 fact n = n * fact (n-1)
 
 fact' 0 = \c -> c 1
-fact' n = \c -> fact (n-1) $ \x -> c (x * n)
+fact' n = \c -> fact' (n-1) $ \x -> c (x * n)
 
 fib 0 = \c -> c 0 
 fib 1 = \c -> c 1
