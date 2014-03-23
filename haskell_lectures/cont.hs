@@ -55,5 +55,5 @@ fib' n = do
   return (x + y)
   
   
-fib'' :: Cont (Int -> (Int -> r )) r
-fib'' = cont $ \n k -> k n
+--fib'' :: Cont (Int -> (Int -> r )) r
+--fib'' = cont $ \n k -> k n
