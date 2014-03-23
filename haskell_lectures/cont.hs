@@ -53,14 +53,10 @@ fib' n = do
   x <- fib (n-1)
   y <- fib (n-2)
   return (x + y)
-  
-  
+
 --fib'' :: Cont (Int -> (Int -> r )) r
 --fib'' = cont $ \n k -> k n
 
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
---  x <- k n
-  x' <- k n'
-  k (x')
   return (n' - 4)
