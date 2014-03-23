@@ -76,9 +76,10 @@ fib' n = do
 -- functions with the monadic style of code. Where did (\c -> c ...) go?
   
 -- :t callCC  
-  
+-- k is a unit function  
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
+  () <- k n
   return (n' - 4)
   
 fib'' 0 = callCC $ \k -> k 0
