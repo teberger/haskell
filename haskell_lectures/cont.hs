@@ -50,7 +50,9 @@ fact' 0 = \c -> c 1
 fact' n = \c -> fact' (n-1) $ \x -> c (x * n) -- <=== look familiar? 
 
 fact'' 0 = return 1
-fact'' n = fact'' (n-1) >>= (* n)
+fact'' n = do
+  x <- fact'' (n-1)
+  return (x * n)
 
 fib 0 = \c -> c 0 
 fib 1 = \c -> c 1
