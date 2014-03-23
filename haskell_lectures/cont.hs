@@ -67,5 +67,3 @@ fib'' n = callCC $ \k -> do
   x1 <- fib'' (n-1)
   x2 <- fib'' (n-2)
   k (x1 + x2)
-  
-      
