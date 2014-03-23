@@ -13,7 +13,7 @@ one = 1
 one_cps :: (Int -> a) -> a
 one_cps = \f -> f 1
 
-one_cps' :: Cont a 1
+one_cps' :: Cont a Int
 one_cps' = cont (\c -> c 1)
 
 add_1 :: Int -> Int
