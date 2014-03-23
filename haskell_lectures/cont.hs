@@ -85,3 +85,5 @@ fib'' n = callCC $ \k -> do
   x2 <- fib'' (n-2)
   k (x1 + x2)
 
+-- k is our continuation function. It acts as a return from
+-- the continuation monad.
