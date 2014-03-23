@@ -98,8 +98,8 @@ realRoot n = callCC $ \k -> do
 
 
 ex8 = do
-  a <- return 1
-  b <- cont (\fred -> [10,20] >>= fred)
+  a <- cont (\c -> [1,2] >>= c)
+  b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
 test8 = runCont ex8 return
