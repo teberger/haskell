@@ -51,11 +51,11 @@ fact' n = \c -> fact' (n-1) $ \x -> c (x * n) -- <=== look familiar?
 
 -- :t return ? 
 -- Monad m => a -> m a
-fact''' 0 = return 1  
-fact''' n = fact''' (n-1) >>= return . ((*) n)
+fact'' 0 = return 1  
+fact'' n = fact'' (n-1) >>= return . ((*) n)
 
-fact'' 0 = return 1
-fact'' n = do
+fact''' 0 = return 1
+fact''' n = do
   x <- fact'' (n-1)
   return (x * n)
   
