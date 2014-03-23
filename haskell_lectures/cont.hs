@@ -74,6 +74,8 @@ fib' n = do
 -- kind of a disappointment, because we hid the continuation
 -- functions with the monadic style of code. Where did (\c -> c ...) go?
   
+-- :t callCC  
+  
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
   return (n' - 4)
@@ -87,3 +89,4 @@ fib'' n = callCC $ \k -> do
 
 -- k is our continuation function. It acts as a return from
 -- the continuation monad.
+foo = callCC $ \k -> 
