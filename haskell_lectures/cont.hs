@@ -104,7 +104,7 @@ realRoot n = callCC $ \k -> do
 
 
 ex8 = do
-  a <- cont (\c -> [c 1, c 2])
+  a <- cont (\c -> join [c 1, c 2])
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
