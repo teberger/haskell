@@ -161,4 +161,7 @@ pinteger = do
 -- combine values as we parse downwards?
   
 -- I'm not well versed enough to figure out what it all
--- would look like using the Cont monad
+-- would look like using the ContT monad
+
+pinteger' :: Cont a Parser Int
+pinteger' = undefined
