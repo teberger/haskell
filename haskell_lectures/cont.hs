@@ -138,5 +138,5 @@ parse s = do
 integer :: String -> Cont a (Integer, String)
 integer = undefined
 
-spaces = String -> Cont a String
+spaces :: String -> Cont a String
 spaces = undefined
