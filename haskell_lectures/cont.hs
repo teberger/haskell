@@ -138,15 +138,10 @@ parse s = callCC $ \k -> do
   return (i:is)
   
 integer :: String -> Cont a (Int, String)
-integer [] = callCC $ \exit1 -> exit1 (0,"Done")
+--integer [] = callCC $ \exit1 -> exit1 (0,"Done")
 integer s = do
   i <- cont $ (\c -> c $ read (takeWhile isDigit s))
   return (i, (dropWhile isDigit s))
   
-isDigit' :: Char -> Cont a Int  
-isDigit' c = callCC $ \k -> do
-  when (not $ isDigit c) $ k "error"
-  return $ digitToInt c 
-
 spaces :: String -> Cont a String
 spaces s = cont (\c -> c $ dropWhile (== ' ') s)
