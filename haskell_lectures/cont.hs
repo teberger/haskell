@@ -124,4 +124,4 @@ maybeMonad = do
   return $ a+b
   
 errorFn :: Int -> (Int -> Maybe Int) -> Maybe Int
-errorFn x = \c -> if c x then Nothing else Just x
+errorFn x = \c -> c x 
