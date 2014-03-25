@@ -154,7 +154,7 @@ number = do
   d <- many1 digit 
   return $ cont (\c -> c . read $ d)
   
---{-  
+-{-  
 listInteger :: Parser (Cont a [Int])  
 listInteger = do  
   x <- number
