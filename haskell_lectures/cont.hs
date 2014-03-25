@@ -118,10 +118,10 @@ listMonad' = do
 testList = listMonad
 testList' = runCont listMonad' return
 
-maybeMonad a c = do
-  a' <- a 
+maybeMonad x y = do
+  x' <- x
   b  <- cont (\c -> if a < 0 then Nothing else c a)
-  c' <- c
-  return $ a+b+c
+  y' <- y
+  return $ x' + b + c'
 
 
