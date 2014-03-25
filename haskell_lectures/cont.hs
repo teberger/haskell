@@ -99,7 +99,7 @@ fib'' n = callCC $ \k -> do
 realRoot n = callCC $ \k -> do
   when (n < 0) $ k "Error"
   k (show $ sqrt n)
-  return "error"
+  return "error" --note: this is never 'returned'
 
 --mother of all monads! We can simulate our favorite monads with continuations.
   
