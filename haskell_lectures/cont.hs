@@ -1,7 +1,7 @@
 module Main where
 
 import Control.Monad.Trans.Cont
-import Control.Applicative
+--import Control.Applicative
 import Control.Monad (when, join)
 
 -- Continuation is typed as (a -> r) -> r
