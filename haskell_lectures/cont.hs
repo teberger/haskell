@@ -123,7 +123,7 @@ maybeMonad = do
   b <- cont (\c -> if a <= 1 then Nothing else c a)
   return $ a+b
   
-assoc :: Eq a => [(a,b)] -> a -> Cont (Maybe b) a 
+assoc :: Eq a => [(a,b)] -> a -> Cont (Maybe b) b
 assoc [] _ = return =<< cont (\c -> Nothing)
 assoc (x:xs) a = do
   x' <- cont (\c -> if a /= (fst x) then runCont (assoc xs a) c else c . fst $ x)
