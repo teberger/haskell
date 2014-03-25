@@ -140,8 +140,9 @@ integer [] = callCC $ \exit1 -> exit1 "Error"
 integer s = do
   i <- isDigit (head s)
   
-isDigit = Char -> Cont a Int  
   
+isDigit = Char -> Cont a Int  
+isDigit c = undefined
 
 spaces :: String -> Cont a String
 spaces s = cont (\c -> c $ dropWhile (== ' ') s)
