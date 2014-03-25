@@ -127,3 +127,4 @@ assocs :: [(a, b)] -> a -> Maybe b
 assocs ls a = do
   item <- return ls
   cont (\c -> if c == item then Nothing else c item) >>= return
+  
