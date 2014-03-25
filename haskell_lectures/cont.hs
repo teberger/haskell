@@ -130,17 +130,18 @@ badString :: String
 badString = "123 321 1 & 1" -- parse should yield: [123,321,1]
 
 parse :: String -> Cont a [Int]
-parse s = do
+parse s = callCC $ \k -> do 
   (i,s') <- integer s 
+  when (s' == "Error") k i
   s'' <- spaces s'
-  is <- parse s'' 
+  is <- parse s''
   return (i:is)
   
 integer :: String -> Cont a (Int, String)
-integer [] = cont $ \exit1 -> exit1 (0,"Error")
+integer [] = cont $ \exit1 -> exit1 []
 integer s = do
   i <- cont $ (\c -> c $ read (takeWhile isDigit s))
-  return (i,(dropWhile isDigit s))
+  return (i, (dropWhile isDigit s))
   
 isDigit' :: Char -> Cont a Int  
 isDigit' c = return $ digitToInt c 
