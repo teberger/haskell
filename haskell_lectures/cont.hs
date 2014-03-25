@@ -149,7 +149,7 @@ spaces' :: String -> Cont a String
 spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
 
 
---can we elaborate using parsec? 
+--can we elaborate using parsec?
 pinteger :: Parser (Cont a Int)
 pinteger = do
   d <- many1 digit
@@ -159,3 +159,10 @@ pinteger = do
 -- we give a context in which to evaluate the parsed 
 -- value... sure, that seems better, but then how do we
 -- combine values as we parse downwards?
+  
+-- I'm not well versed enough to figure out what it all
+-- would look like using the Cont monad
+  
+cint' :: Cont a (Parse Int)
+cint' = callCC $ \k -> do
+  k (
