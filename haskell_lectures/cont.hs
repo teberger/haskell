@@ -150,3 +150,9 @@ spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
 
 
 
+--can we elaborate using parsec? 
+integer :: Parser (Cont a Int)
+integer = do
+  d <- many1 digit
+  return $ callCC $ \k -> k (read d)
+
