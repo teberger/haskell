@@ -125,6 +125,6 @@ maybeMonad = do
   
 --assocs :: [(a, b)] -> a -> Maybe b  
 assocs [] _ = \c -> Nothing
---assocs (x:xs) a = do
---  x' <- cont (\c -> if c == x then assocs xs a else c x)
---  return x'
+assocs (x:xs) a = do
+  x' <- cont (\c -> if c == x then assocs xs a else c x)
+  return x'
