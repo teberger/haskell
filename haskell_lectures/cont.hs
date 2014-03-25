@@ -123,5 +123,5 @@ maybeMonad = do
   b <- cont errorFn
   return $ a+b
   
-errorFn :: Int -> Maybe Int  
-errorFn c =  if c <= 0 then Nothing else Just c
+errorFn :: (Int -> Maybe Int) -> Maybe Int
+errorFn x = \c -> if c x then Nothing else Just x
