@@ -139,11 +139,10 @@ integer :: String -> Cont a (Integer, String)
 integer [] = cont $ \exit1 -> exit1 (0,"Error")
 integer s = do
   i <- isDigit (head s)
-  return (1,"")
-  
+  return (i,"")
   
 isDigit :: Char -> Cont a Int  
-isDigit c = undefined
+isDigit c = return $ digitToInt c 
 
 spaces :: String -> Cont a String
 spaces s = cont (\c -> c $ dropWhile (== ' ') s)
