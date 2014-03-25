@@ -3,6 +3,7 @@ module Main where
 import Control.Monad.Trans.Cont
 import Control.Monad (when, join)
 import Data.Char
+import Text.ParserCombinators.Parsec
 
 -- Continuation is typed as (a -> r) -> r
 -- Cont a r
