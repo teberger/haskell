@@ -129,20 +129,20 @@ testString = "123 321 1 32" -- parse should yield: [123,321,1,32]
 badString :: String
 badString = "123 321 1 & 1" -- parse should fail
 
-parse :: String -> Cont a [Integer]
+parse :: String -> Cont a [Int]
 parse s = do
   (i,s') <- integer s 
   s'' <- spaces s'
   is <- parse s'' 
   return (i:is)
   
-integer :: String -> Cont a (Integer, String)
+integer :: String -> Cont a (Int, String)
 integer [] = cont $ \exit1 -> exit1 (0,"Error")
 integer s = do
   i <- isDigit' (head s)
   return (i,"")
   
-isDigit' :: Char -> Cont a Integer  
+isDigit' :: Char -> Cont a Int  
 isDigit' c = return $ digitToInt c 
 
 spaces :: String -> Cont a String
