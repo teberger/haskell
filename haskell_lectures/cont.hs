@@ -116,4 +116,4 @@ listMonad' = do
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
-test8 = runCont ex8 show
+test8 = runCont listMonad' show
