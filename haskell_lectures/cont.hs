@@ -127,4 +127,4 @@ maybeMonad = do
 --assocs [] _ = \c -> Nothing
 assocs (x:xs) a = do
   x' <- cont (\c -> if a /= x then c $ assocs xs a else c x)
-  return x'
+  return $ join x'
