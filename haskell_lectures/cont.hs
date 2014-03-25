@@ -160,5 +160,4 @@ listInteger = do
   x <- number
   xs <- listInteger
   return (callCC $ \k -> do
-             when (xs == []) $ k x:[]
              k x:xs)
