@@ -138,7 +138,7 @@ parse s = do
 integer :: String -> Cont a (Integer, String)
 integer [] = callCC $ \exit1 -> exit1 "Error"
 integer s = do
-  i <- isDigit
+  i <- isDigit (head s)
   
 isDigit = Char -> Cont a Int  
   
