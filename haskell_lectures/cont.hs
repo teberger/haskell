@@ -139,7 +139,7 @@ parse s = do
 integer :: String -> Cont a (Int, String)
 integer [] = cont $ \exit1 -> exit1 (0,"Error")
 integer s = do
-  i <- isDigit' (head s)
+  i <- cont $ (\c -> c $ read (takeWhile isDigit s))
   return (i,"")
   
 isDigit' :: Char -> Cont a Int  
