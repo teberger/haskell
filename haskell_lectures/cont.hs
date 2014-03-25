@@ -122,3 +122,5 @@ maybeMonad = do
   a <- return 1
   b <- cont (\c -> "escape!")
   return $ a+b
+  
+errorFn c =  if c <= 0 then Nothing else Just c
