@@ -147,16 +147,3 @@ integer s = callCC $ \k -> do
   
 spaces' :: String -> Cont a String
 spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
-
-
-number :: Parser (Cont a Int)
-number = do
-  d <- many1 digit 
-  return $ cont (\c -> c . read $ d)
-  
-
-listInteger :: Parser (Cont a [Int])
-listInteger = do 
-  x <- number
-  xs <- listInteger
-  return $ cont (\c -> (c x:(runCont xs id)))
