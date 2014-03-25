@@ -144,7 +144,9 @@ integer s = do
   return (i, (dropWhile isDigit s))
   
 isDigit' :: Char -> Cont a Int  
-isDigit' c = return $ digitToInt c 
+isDigit' c = callCC $ \k -> do
+  when (not $ isDigit c) \k "error"
+  return $ digitToInt c 
 
 spaces :: String -> Cont a String
 spaces s = cont (\c -> c $ dropWhile (== ' ') s)
