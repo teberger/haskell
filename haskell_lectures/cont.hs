@@ -117,3 +117,8 @@ listMonad' = do
 
 testList = listMonad
 testList' = runCont listMonad' return
+
+maybeMonad = do
+  a <- return 1
+  b <- cont (\c -> c "escape!")
+  return $ a+b
