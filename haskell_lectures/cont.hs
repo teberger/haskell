@@ -136,7 +136,11 @@ parse s = do
   return (i:is)
   
 integer :: String -> Cont a (Integer, String)
-integer s = undefined
+integer [] = callCC $ \exit1 -> exit1 "Error"
+integer s = do
+  i <- isDigit
+  
+isDigit = Char -> Cont a Int  
   
 
 spaces :: String -> Cont a String
