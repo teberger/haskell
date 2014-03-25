@@ -126,5 +126,5 @@ maybeMonad = do
 assoc :: Eq a => [(a,b)] -> a -> Cont (Maybe b) a 
 assoc [] _ = return =<< cont (\c -> Nothing)
 assoc (x:xs) a = do
-  x' <- cont (\c -> if a /= x then c $ assoc xs a else c x)
+  x' <- cont (\c -> if a /= x then c $ assoc xs a else c . fst $ x )
   return $ join x'
