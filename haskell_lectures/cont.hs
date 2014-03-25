@@ -132,8 +132,8 @@ parse :: String -> Cont a [Integer]
 parse s = do
   (i,s') <- integer s 
   s'' <- spaces s'
-  is <- parse s''
-  cont (\c -> c (i:is))
+  is <- parse s'' 
+  return (i:is)
   
 integer :: String -> Cont a (Integer, String)
 integer = undefined
