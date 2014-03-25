@@ -155,8 +155,8 @@ number = do
   return $ cont (\c -> c . read $ d)
   
 
-listInteger :: Parser (Cont a [Int])  
-listInteger = do  
+listInteger :: Parser (Cont a [Int])
+listInteger = do 
   x <- number
   xs <- listInteger
-  return $ cont (\c -> c (x: (runCont xs id)))
+  return $ cont (\c -> c (x:(runCont xs id)))
