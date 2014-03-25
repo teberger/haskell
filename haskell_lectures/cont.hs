@@ -154,7 +154,7 @@ number = do
   d <- many1 digit 
   return $ cont (\c -> c . read $ d)
   
-{-  
+
 listInteger :: Parser (Cont a [Int])  
 listInteger = do  
   x <- number
@@ -162,5 +162,3 @@ listInteger = do
   return (callCC $ \k -> do
              when (xs == []) k x:[]
              k x:xs)
-
---}
