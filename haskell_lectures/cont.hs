@@ -134,3 +134,6 @@ parse s = do
   s'' <- spaces s'
   is <- parse s''
   return (i:is)
+  
+integer :: String -> Cont a Integer
+integer = undefined
