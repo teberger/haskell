@@ -153,8 +153,9 @@ spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
 pinteger :: Parser (Cont a Int)
 pinteger = do
   d <- many1 digit
-  return $ callCC $ \k -> k (read d)
+  return $ cont (\k -> k (read d))
 
 -- how is this better from :: Parse Int?   
 -- we give a context in which to evaluate the parsed 
--- value... sure, th
+-- value... sure, that seems better, but then how do we
+-- combine values as we parse downwards?
