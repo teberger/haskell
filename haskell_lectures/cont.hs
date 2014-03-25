@@ -120,8 +120,5 @@ testList' = runCont listMonad' return
 
 maybeMonad = do
   a <- return 1
-  b <- cont (errorFn a)
+  b <- cont (\c -> if a <= 1 then Nothing else Just (c a))
   return $ a+b
-  
-errorFn :: Int -> (Int -> Maybe Int) -> Maybe Int
-errorFn x = \c -> c x 
