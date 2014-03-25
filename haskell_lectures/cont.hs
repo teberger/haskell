@@ -139,11 +139,11 @@ parse s = do
 integer :: String -> Cont a (Integer, String)
 integer [] = cont $ \exit1 -> exit1 (0,"Error")
 integer s = do
-  i <- isDigit (head s)
+  i <- isDigit' (head s)
   return (i,"")
   
-isDigit :: Char -> Cont a Int  
-isDigit c = return $ digitToInt c 
+isDigit' :: Char -> Cont a Int  
+isDigit' c = return $ digitToInt c 
 
 spaces :: String -> Cont a String
 spaces s = cont (\c -> c $ dropWhile (== ' ') s)
