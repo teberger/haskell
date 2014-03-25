@@ -102,7 +102,6 @@ realRoot n = callCC $ \k -> do
   return "error" --note: this is never 'returned'
 
 --mother of all monads! We can simulate our favorite monads with continuations.
-  
 -- consider the list monad:  
 listMonad = do
   a <- [1,2]
