@@ -118,7 +118,7 @@ listMonad' = do
 testList = listMonad
 testList' = runCont listMonad' return
 
-maybeMonad x y = x >>= \x' -> return . (if x' < 0 then Nothing else Just x') >>= y . (+) >>=  return
+maybeMonad x y = x >>= \x' -> return . (if x' < 0 then Nothing else Just x') >>= y . (+) >>= return
   
 --  b  <- cont (\c -> if x' < 0 then Nothing else c x')
 --  y' <- y
