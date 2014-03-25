@@ -140,7 +140,7 @@ integer :: String -> Cont a (Int, String)
 integer [] = cont $ \exit1 -> exit1 (0,"Error")
 integer s = do
   i <- cont $ (\c -> c $ read (takeWhile isDigit s))
-  return (i,"")
+  return (i,(dropWhile isDigit s))
   
 isDigit' :: Char -> Cont a Int  
 isDigit' c = return $ digitToInt c 
