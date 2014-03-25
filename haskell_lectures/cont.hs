@@ -142,7 +142,7 @@ integer s = do
   i <- isDigit' (head s)
   return (i,"")
   
-isDigit' :: Char -> Cont a Int  
+isDigit' :: Char -> Cont a Integer  
 isDigit' c = return $ digitToInt c 
 
 spaces :: String -> Cont a String
