@@ -131,7 +131,7 @@ badString = "123 321 1 & 1" -- parse should yield: [123,321,1]
 
 parse :: String -> Cont a [Int]
 parse s = callCC $ \k -> do 
-  when (s' == []) $ k []
+  when (s == []) $ k []
   (i,s') <- integer s
   when (s' == "Error") $ k []
   s'' <- spaces s'
