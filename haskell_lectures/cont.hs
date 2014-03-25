@@ -136,7 +136,7 @@ parse s = do
   return (i:is)
   
 integer :: String -> Cont a (Integer, String)
-integer [] = callCC $ \exit1 -> exit1 "Error"
+integer [] = callCC $ \exit1 -> exit1 (0,"Error")
 integer s = do
   i <- isDigit (head s)
   return (1,"")
