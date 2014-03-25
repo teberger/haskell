@@ -119,8 +119,9 @@ testList = listMonad
 testList' = runCont listMonad' return
 
 maybeMonad = do
-  a <- return 100
+  a <- return 1
   b <- cont (\c -> if a <= 1 then Nothing else c a)
-  return $ a+b
+  c <- return 1000
+  return $ a+b+c
 
 
