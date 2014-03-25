@@ -129,4 +129,8 @@ badString :: String
 badString = "123 321 1 & 1" -- parse should fail
 
 parse :: String -> Cont a [Integer]
-parse = undefined
+parse s = do
+  (i,s') <- integer s 
+  s'' <- spaces s'
+  is <- parse s''
+  return (i:is)
