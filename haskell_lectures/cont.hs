@@ -102,7 +102,7 @@ realRoot n = callCC $ \k -> do
   return "error" --note: this is never 'returned'
 
 --mother of all monads! We can simulate our favorite monads with continuations.
--- consider the list monad:  
+-- consider the list monad:
 listMonad = do
   a <- [1,2]
   b <- [10,20]
@@ -111,17 +111,22 @@ listMonad = do
 
 listMonad' = do
   a <- cont (\c -> join [c 1, c 2])
-  -- or
+  -- orai
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
 testList = listMonad
 testList' = runCont listMonad' return
 
-maybeMonad x y = x >>= \x' -> return . (if x' < 0 then Nothing else Just x') >>= y . (+) >>= return
-  
---  b  <- cont (\c -> if x' < 0 then Nothing else c x')
---  y' <- y
---  return $ x' + b + y'
+--more importantly, this shows us where the monadic values get unwrapped
+--in relation to the cont monad
 
+--lets write an String -> [Integer] parser using Cont
+testString :: String
+testString = "123 321 1 32" -- parse should yield: [123,321,1,32]
 
+badString :: String
+badString = "123 321 1 & 1" -- parse should fail
+
+parse :: String -> Cont a [Integer]
+parse = undefined
