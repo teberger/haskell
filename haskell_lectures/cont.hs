@@ -151,5 +151,6 @@ spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
   
 
 number :: Parser (Cont a Int)
-number = undefined -- do
---  many1 
+number = do
+  d <- many1 digit 
+  return (cont \c -> c d)
