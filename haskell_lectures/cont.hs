@@ -149,13 +149,12 @@ spaces' :: String -> Cont a String
 spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
 
 
-
 --can we elaborate using parsec? 
 pinteger :: Parser (aCont a Int)
 pinteger = do
   d <- many1 digit
   return $ callCC $ \k -> k (read d)
-  
+
 -- how is this better from :: Parse Int?   
 -- we give a context in which to evaluate the parsed 
 -- value... sure, th
