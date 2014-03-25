@@ -139,7 +139,7 @@ parse s = callCC $ \k -> do
   
 integer :: String -> Cont a (Int, String)
 integer s = callCC $ \k -> do
-  when (not . isDigit . head $ s) \k (0,"")
+  when (not . isDigit . head $ s) $ k (0,"")
   i <- cont $ (\c -> c $ read (takeWhile isDigit s))
   return (i, (dropWhile isDigit s))
   
