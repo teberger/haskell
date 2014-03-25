@@ -139,7 +139,7 @@ integer :: String -> Cont a (Integer, String)
 integer [] = callCC $ \exit1 -> exit1 "Error"
 integer s = do
   i <- isDigit (head s)
-  return (1,[])
+  return (1,"")
   
   
 isDigit :: Char -> Cont a Int  
