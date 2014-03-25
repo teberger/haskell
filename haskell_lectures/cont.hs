@@ -135,8 +135,8 @@ parse' s = callCC $ \k -> do
   when (s == []) $ k []
   (i,s') <- integer s
   when (s' == "Error") $ k []
-  s'' <- spaces s'
-  is <- parse s''
+  s'' <- spaces' s'
+  is <- parse' s''
   return (i:is)
   
 integer :: String -> Cont a (Int, String)
