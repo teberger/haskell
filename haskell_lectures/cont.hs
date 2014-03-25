@@ -145,7 +145,7 @@ integer s = do
   
 isDigit' :: Char -> Cont a Int  
 isDigit' c = callCC $ \k -> do
-  when (not $ isDigit c) \k "error"
+  when (not $ isDigit c) $ k "error"
   return $ digitToInt c 
 
 spaces :: String -> Cont a String
