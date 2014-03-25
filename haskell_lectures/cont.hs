@@ -147,3 +147,6 @@ integer s = callCC $ \k -> do
   
 spaces' :: String -> Cont a String
 spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
+
+
+
