@@ -130,8 +130,8 @@ testString = "123 321 1 32" -- parse should yield: [123,321,1,32]
 badString :: String
 badString = "123 321 1 & 1" -- parse should yield: [123,321,1]
 
-parse :: String -> Cont a [Int]
-parse s = callCC $ \k -> do 
+parse' :: String -> Cont a [Int]
+parse' s = callCC $ \k -> do 
   when (s == []) $ k []
   (i,s') <- integer s
   when (s' == "Error") $ k []
@@ -145,5 +145,5 @@ integer s = callCC $ \k -> do
   i <- cont $ (\c -> c $ read (takeWhile isDigit s))
   return (i, (dropWhile isDigit s))
   
-spaces :: String -> Cont a String
-spaces s = cont (\c -> c $ dropWhile (== ' ') s)
+spaces' :: String -> Cont a String
+spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
