@@ -159,5 +159,4 @@ listInteger :: Parser (Cont a [Int])
 listInteger = do  
   x <- number
   xs <- listInteger
-  return (callCC $ \k -> do
-             k x:xs)
+  return $ cont (\c -> c (x:xs))
