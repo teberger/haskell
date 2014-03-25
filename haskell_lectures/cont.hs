@@ -138,7 +138,7 @@ parse s = callCC $ \k -> do
   return (i:is)
   
 integer :: String -> Cont a (Int, String)
-integer [] = cont $ \exit1 -> exit1 []
+integer [] = callCC $ \exit1 -> exit1 []
 integer s = do
   i <- cont $ (\c -> c $ read (takeWhile isDigit s))
   return (i, (dropWhile isDigit s))
