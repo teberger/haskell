@@ -147,3 +147,9 @@ integer s = callCC $ \k -> do
   
 spaces' :: String -> Cont a String
 spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
+
+  
+
+number :: Parser (Cont a Int)
+number = undefined -- do
+--  many1 
