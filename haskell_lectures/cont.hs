@@ -127,7 +127,7 @@ testString :: String
 testString = "123 321 1 32" -- parse should yield: [123,321,1,32]
 
 badString :: String
-badString = "123 321 1 & 1" -- parse should fail
+badString = "123 321 1 & 1" -- parse should yield: [123,321,1]
 
 parse :: String -> Cont a [Int]
 parse s = do
