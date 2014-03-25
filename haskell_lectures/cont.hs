@@ -163,5 +163,5 @@ pinteger = do
 -- I'm not well versed enough to figure out what it all
 -- would look like using the ContT monad
 
-pinteger' :: Cont a Parser Int
+pinteger' :: ContT a Parser Int
 pinteger' = undefined
