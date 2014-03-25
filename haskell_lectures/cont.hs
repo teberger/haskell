@@ -120,7 +120,7 @@ testList' = runCont listMonad' return
 
 maybeMonad a c = do
   a' <- a 
-  b <- cont (\c -> if a <= 1 then Nothing else c a)
+  b  <- cont (\c -> if a < 0 then Nothing else c a)
   c' <- c
   return $ a+b+c
 
