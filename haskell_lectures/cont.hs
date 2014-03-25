@@ -136,9 +136,8 @@ parse s = do
   return (i:is)
   
 integer :: String -> Cont a (Integer, String)
-integer s = do
+integer s = undefined
   
 
 spaces :: String -> Cont a String
-spaces s = do
-  cont (\c -> c $ dropWhile (== ' ') s)
+spaces s = cont (\c -> c $ dropWhile (== ' ') s)
