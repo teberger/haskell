@@ -122,6 +122,6 @@ maybeMonad x y = do
   x' <- x
   b  <- cont (\c -> if a < 0 then Nothing else c a)
   y' <- y
-  return $ x' + b + c'
+  return $ x' + b + y'
 
 
