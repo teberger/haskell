@@ -101,9 +101,18 @@ realRoot n = callCC $ \k -> do
   k (show $ sqrt n)
   return "error"
 
+--mother of all monads! We can simulate our favorite monads with continuations.
+  
+-- consider the list monad:  
+listMonad = do
+  a <- [1,2]
+  b <- [10,20]
+  return $ a+b
+ 
 
-ex8 = do
+listMonad' = do
   a <- cont (\c -> join [c 1, c 2])
+  -- or
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
