@@ -162,7 +162,3 @@ pinteger = do
   
 -- I'm not well versed enough to figure out what it all
 -- would look like using the Cont monad
-  
-cint' :: Cont a (Parse Int)
-cint' = callCC $ \k -> do
-  k (
