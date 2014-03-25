@@ -116,4 +116,5 @@ listMonad' = do
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
-testList = runCont listMonad -- return
+testList
+testList' = runCont listMonad return
