@@ -2,7 +2,7 @@ module Main where
 
 import Control.Monad.Trans.Cont
 import Control.Monad (when, join)
-import Data.Char
+
 import Text.ParserCombinators.Parsec
 
 -- Continuation is typed as (a -> r) -> r
@@ -165,5 +165,5 @@ pinteger = do
 
 --pinteger' :: ((r' -> r') -> m r -> m r) -> (r' -> r') -> ContT r Parser Int -> ContT r Parser Int
 pinteger' = callCC $ \k -> do
-  k (lift $ many1 digit >>= (return . read))
+  k (lift v$ many1 digit >>= (return . read))
 -- ????
