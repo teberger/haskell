@@ -164,7 +164,7 @@ pinteger = do
 -- would look like using the ContT monad
 
 --pinteger' :: ((r' -> r') -> m r -> m r) -> (r' -> r') -> ContT r Parser Int -> ContT r Parser Int
-pinteger' = liftLocal (many1 digit)
+pinteger' = liftLocal (digit)
   
   
   -- ????
