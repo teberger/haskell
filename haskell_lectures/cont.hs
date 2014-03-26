@@ -167,5 +167,5 @@ pinteger = do
 
 --pinteger' :: ((r' -> r') -> m r -> m r) -> (r' -> r') -> ContT r Parser Int -> ContT r Parser Int
 pinteger' = callCC $ \k -> do
-  k (lift v$ many1 digit >>= (return . read))
+  k (lift $ many1 digit >>= (return . read))
 -- ????
