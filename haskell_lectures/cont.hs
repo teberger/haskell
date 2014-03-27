@@ -94,7 +94,7 @@ fib'' n = callCC $ \k -> do
 realRoot n = callCC $ \k -> do
   when (n < 0) $ k Nothing
   k (Just $ sqrt n)
-  return "error" --note: this is never 'returned'
+--  return "error" --note: this is never 'returned'
 
 -- mother of all monads! We can simulate our favorite monads with continuations.
 -- consider the list monad:
