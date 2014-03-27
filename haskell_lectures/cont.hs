@@ -93,7 +93,7 @@ fib'' n = callCC $ \k -> do
 -- the continuation monad.
 realRoot n = callCC $ \k -> do
   when (n < 0) $ k Nothing
-  k (sqrt n)
+  k (Just $ sqrt n)
 --  return "error" --note: this is never 'returned'
 
 -- mother of all monads! We can simulate our favorite monads with continuations.
