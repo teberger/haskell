@@ -92,7 +92,7 @@ fib'' n = callCC $ \k -> do
 -- k is our continuation function. It acts as a return from
 -- the continuation monad.
 realRoot n = callCC $ \k -> do
-  when (n < 0) $ Nothing
+  when (n < 0) $ k Nothing
   k (Just $ sqrt n)
   
 --  return "error" --note: this is never 'returned'
