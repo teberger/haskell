@@ -160,7 +160,7 @@ pinteger = do
 -- how is this better from :: Parse Int?   
 -- we give a context in which to evaluate the parsed 
 -- value... sure, that seems better, but then how do we
--- combine values as we parse downwards?
+-- combine values as we parse our file? 
   
 -- I'm not well versed enough to figure out what it all
 -- would look like using the ContT monad
