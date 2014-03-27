@@ -108,8 +108,7 @@ listMonad' = do
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
-testList = listMonad
-testList' = runCont listMonad' return
+testList = runCont listMonad' return
 
 --more importantly, this shows us where the monadic values get unwrapped
 --in relation to the cont monad
