@@ -47,6 +47,9 @@ fact''' n = do
   x <- fact'' (n-1)
   return (x * n)
   
+-- question: What is the monad we are using here? Does
+  -- anyone know?
+  
 --now what about fib?
 --fib :: Int -> (Int -> a) -> a
 
