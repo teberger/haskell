@@ -18,9 +18,8 @@ one_cps = \f -> f 1
 
 -- :t cont
 --    = ((a -> r) -> r) -> Cont r a 
-
-one_cps' :: Cont a Int
-one_cps' = cont (\c -> c 1)
+--one_cps' :: Cont a Int
+--one_cps' = cont (\c -> c 1)
 
 add_1 :: Int -> Int
 add_1 x = x + 1
