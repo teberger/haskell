@@ -92,9 +92,9 @@ fib'' n = callCC $ \k -> do
 -- k is our continuation function. It acts as a return from
 -- the continuation monad.
 realRoot n = callCC $ \k -> do
-  when (n < 0) $ k "Error"
-  k (show $ sqrt n)
---  return "error" --note: this is never 'returned'
+  when (n < 0) $ k Nothing
+  k (Just $ sqrt n)
+  return Nothing --note: this is never 'returned'
 
 -- mother of all monads! We can simulate our favorite monads with continuations.
 -- consider the list monad:
