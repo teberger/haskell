@@ -94,7 +94,7 @@ realRoot n = callCC $ \k -> do
   k (show $ sqrt n)
   return "error" --note: this is never 'returned'
 
---mother of all monads! We can simulate our favorite monads with continuations.
+-- mother of all monads! We can simulate our favorite monads with continuations.
 -- consider the list monad:
 listMonad = do
   a <- [1,2]
@@ -145,7 +145,8 @@ pinteger = do
   d <- many1 digit
   return $ cont (\k -> k (read d)) 
 
--- how is this better from :: Parse Int?   
+-- how is this better from :: Parse Int?
+-- obviously uglier...
 -- we give a context in which to evaluate the parsed 
 -- value... sure, that seems better, but then how do we
 -- combine values as we parse our file? 
