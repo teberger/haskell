@@ -77,6 +77,9 @@ fib' n = do
 -- k is a function from (a -> r) in the type (Cont r a) 
   -- where r = return type
   --       a = other  type
+  
+-- k is our continuation function. It acts as a return from
+-- the continuation monad.
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
 --  k n
@@ -89,8 +92,6 @@ fib'' n = callCC $ \k -> do
   x2 <- fib'' (n-2)
   k (x1 + x2)
 
--- k is our continuation function. It acts as a return from
--- the continuation monad.
 realRoot n = callCC $ \k -> do
   when (n < 0) $ k "Error"
   k (show $ sqrt n)
