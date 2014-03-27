@@ -59,7 +59,7 @@ fib n = \c -> fib (n-1) $ \x ->
               c (x + y)
 
 -- in monadic form?
-fib' :: (Num r) => Int -> (Int -> r) -> r
+--fib' :: (Num r) => Int -> (Int -> r) -> r
 fib' 0 = return 0 
 fib' 1 = return 1
 fib' n = do
@@ -72,7 +72,9 @@ fib' n = do
 -- functions with the monadic style of code. Where did (\c -> c ...) go?
   
 -- :t callCC  
--- k is a unit function  
+-- k is a function from (a -> r) in the type (Cont r a) 
+  -- where r = return type
+  --       a = other  type
 foo n = callCC $ \k -> do
   let n' = n ^ 2 + 3
 --  k n
