@@ -46,10 +46,7 @@ fact''' 0 = return 1
 fact''' n = do
   x <- fact'' (n-1)
   return (x * n)
-  
--- question: What is the monad we are using here? Does
-  -- anyone know?
-  
+
 --now what about fib?
 --fib :: Int -> (Int -> a) -> a
 
@@ -68,6 +65,9 @@ fib' n = do
   x <- fib (n-1)
   y <- fib (n-2)
   return (x + y)
+  
+-- question: What is the monad we are using here? Does
+  -- anyone know?
 
 -- so, continuation functions are monadic in nature however, this is 
 -- kind of a disappointment, because we hid the continuation
