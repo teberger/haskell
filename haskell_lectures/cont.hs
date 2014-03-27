@@ -155,7 +155,7 @@ spaces' s = cont (\c -> c $ dropWhile (== ' ') s)
 pinteger :: Parser (Cont a Int)
 pinteger = do
   d <- many1 digit
-  return $ cont (\k -> k (read d)) -- not very exciting...
+  return $ cont (\k -> k (read d)) 
 
 -- how is this better from :: Parse Int?   
 -- we give a context in which to evaluate the parsed 
