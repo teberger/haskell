@@ -102,11 +102,10 @@ listMonad = do
   a <- [1,2]
   b <- [10,20]
   return $ a+b
- 
 
 listMonad' = do
   a <- cont (\c -> join [c 1, c 2])
-  -- orai
+  -- or
   b <- cont (\c -> [10,20] >>= c)
   return $ a+b
 
