@@ -28,20 +28,6 @@ add_1 x = x + 1
 add1_cps :: Int -> ((Int -> a) -> a)
 add1_cps x = \f -> f (x + 1)
 
-add x y = x + y
-add' x = \y -> x + y
-add'' = \x -> \y -> x + y
-
-op = \operator -> (\x -> (\y -> operator x y))
-
-op' = \operator -> (\x -> 
-                   (\y -> 
-                   (\context -> context $ operator x y)))
-
---op' x y operator = \c -> c $ operator x y
-add_cont = op' (+)
-mult_cont = op' (*)
-
 --fact ??
 fact :: Int -> Int
 fact 0 = 1
